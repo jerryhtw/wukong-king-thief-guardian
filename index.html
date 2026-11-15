@@ -1,0 +1,752 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wukong: King, Thief, Guardian · The making of</title>
+<meta name="description" content="A development log for Wukong: King, Thief, Guardian, a solo entry in the 2026 Epic AI MegaJam. One director, a crew of Claude agents, and an honest account of what worked and what broke.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://jerryhtw.github.io/wukong-king-thief-guardian/">
+<meta property="og:title" content="Wukong: King, Thief, Guardian · The making of">
+<meta property="og:description" content="One director, a crew of Claude agents, thirty-three hours. What worked, what broke, and who did what.">
+<meta property="og:image" content="https://jerryhtw.github.io/wukong-king-thief-guardian/images/og-card.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Wukong: King, Thief, Guardian · The making of">
+<meta name="twitter:description" content="One director, a crew of Claude agents, thirty-three hours. What worked, what broke, and who did what.">
+<meta name="twitter:image" content="https://jerryhtw.github.io/wukong-king-thief-guardian/images/og-card.jpg">
+<link rel="canonical" href="https://jerryhtw.github.io/wukong-king-thief-guardian/">
+<meta name="color-scheme" content="light dark">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+<header class="mast">
+  <img src="images/hero.jpg" alt="Sun Wukong seen from behind, staff planted, looking over a misty valley at dawn. A frame from the game's opening cutscene." width="1600" height="900">
+  <div class="mast-in">
+    <p class="kicker">2026 Epic AI MegaJam · Glass Box development log</p>
+    <h1>Wukong <small>King · Thief · Guardian</small></h1>
+    <p class="dek">How one director and a crew of AI agents took a game from a jam page to a phone in a day and a half, and everything that went wrong on the way.</p>
+    <p class="byline">By <b>Ryan Ham</b> · Team Banana-Makes-Sense · Unreal Engine 5.9 · Android</p>
+  </div>
+</header>
+
+<div class="shell">
+
+<nav class="toc" aria-label="Contents">
+  <details open>
+    <summary>Contents</summary>
+    <h2>Contents</h2>
+    <ol>
+      <li><a href="#short">In short</a></li>
+      <li><a href="#bet">The bet</a></li>
+      <li><a href="#plan">The first plan</a></li>
+      <li><a href="#pivot">The pivot</a></li>
+      <li><a href="#art">Art pipeline</a></li>
+      <li><a href="#first-light">First light</a></li>
+      <li><a href="#dailies">The town isn't fun</a></li>
+      <li><a href="#bosses">Three bosses</a></li>
+      <li><a href="#audio">Sound</a></li>
+      <li><a href="#crew">Running the crew</a></li>
+      <li><a href="#notes">Playtest notes</a></li>
+      <li><a href="#mobile">The mobile pivot</a></li>
+      <li><a href="#cutscenes">Cutscenes</a></li>
+      <li><a href="#qa">QA and packaging</a></li>
+      <li><a href="#lessons">Lessons</a></li>
+      <li><a href="#timeline">Timeline</a></li>
+      <li><a href="#ledger">Who did what</a></li>
+      <li><a href="#credits">Credits and tools</a></li>
+    </ol>
+    <button class="theme" type="button">Dark theme</button>
+  </details>
+</nav>
+
+<main>
+
+<!-- ============================================================ -->
+<section id="short">
+  <div class="brief">
+    <h2>In short</h2>
+    <p><strong>What it is.</strong> A short action game in three chapters. In each one you walk Sun Wukong through a painted town seen from above, talk to two residents, then step into a gold ring and the camera dives through mist to his shoulder for a 3D boss fight. It ships as an Android APK.</p>
+    <p><strong>How it was made.</strong> Almost all of it happened inside one Claude Code session. I made the decisions, generated the images, models, music and video in other tools, and played every build. Claude models (Fable 5.2, Opus 5.5, Sonnet 5.5) worked as a crew of agents that planned, designed, wrote all the C++, built the arenas, ran the tests and packaged the game.</p>
+    <p><strong>What this page is.</strong> The full record, in order, including the plan I threw away, the ideas I rejected, an engine install five agents broke between them, and a tutorial that sat stuck on my phone for 204 seconds. Times are Korea Standard Time and come from the commit history.</p>
+  </div>
+
+  <div class="stats">
+    <div><b>33 h</b><span>from reading the jam page to this write-up</span></div>
+    <div><b>97 min</b><span>from greenlight to a playable first chapter</span></div>
+    <div><b>200+</b><span>commits across the game and docs repositories</span></div>
+    <div><b>39 → 60</b><span>frames per second on the test phone</span></div>
+  </div>
+
+  <p class="note">Written at 00:40 on Monday 16 November, ten hours before the official deadline, while the second round of phone notes was still being built. The section on <a href="#qa">QA and packaging</a> says exactly what had and had not been verified at that moment.</p>
+
+  <!-- GAMEPLAY-VIDEO-SLOT: uncomment this block once video/wukong_gameplay_60s_web.mp4 exists.
+  <figure class="watch">
+    <video controls playsinline preload="none" poster="images/hero.jpg" width="1280" height="720">
+      <source src="video/wukong_gameplay_60s_web.mp4" type="video/mp4">
+    </video>
+    <figcaption>Watch the gameplay video: sixty seconds recorded from the final build.</figcaption>
+  </figure>
+  END GAMEPLAY-VIDEO-SLOT -->
+</section>
+
+<!-- ============================================================ -->
+<section id="bet">
+  <div class="col">
+    <span class="sec-no">01</span>
+    <h2>The bet</h2>
+    <p class="when">Saturday 14 November · 15:38</p>
+    <p class="lede">I am a solo developer, not a student, and I started late. The jam opened on Thursday afternoon and this log begins on Saturday at 15:38, which left under two days.</p>
+    <p>Why Wukong? Black Myth: Wukong inspired me deeply, and it was a big part of the motivation behind this plan. Inspiration is where it stopped. The novel is in the public domain and that game is not, so from the first hour the rule was to learn from its genre and never borrow from it (see <a href="#pivot">section 03</a>).</p>
+    <p>The bet was that I could spend those days directing instead of typing. I would hold the decisions that need taste, money, an account or a submit button. Everything else would go to Claude models running as agents inside a single Claude Code session, each used where it is strongest. Fable 5.2 took concepts, story and art direction. Opus 5.5 took planning, the core game code, debugging and the job of orchestrating the others. Sonnet 5.5 took high-volume building: arenas, effects wiring, document revisions.</p>
+    <p>One rule from my brief shaped the whole project: do not run every stage on the same model at the same effort. It wastes time and tokens. A one-off plan synthesis got Opus at maximum effort. A master-plan revision got Sonnet at default.</p>
+    <p>The first task was unglamorous. Opus translated the whole jam page into Korean, section by section, keeping all 64 links and adding a Korean time beside every US one. That is how we noticed the real deadline is Monday 10:59, not Sunday midnight. I set my own deadline at Sunday 22:00 and treated the rest as buffer. I ended up needing the buffer.</p>
+  </div>
+  <figure>
+    <img src="images/01-jam-page.jpg" alt="The itch.io page of the 2026 Epic AI MegaJam" loading="lazy" width="1600" height="900">
+    <figcaption>The jam page as captured on 15 November. Reading it line by line, with converted times, moved the deadline by eleven hours in my head.</figcaption>
+  </figure>
+</section>
+
+<!-- ============================================================ -->
+<section id="plan">
+  <div class="col">
+    <span class="sec-no">02</span>
+    <h2>The first plan, and why I threw it away</h2>
+    <p class="when">Saturday 23:00 → Sunday 00:12</p>
+    <p class="lede">My first brief asked for too much at once: a high score on all seven judging criteria, clever use of sponsor products, an Android client talking to a dedicated server on AWS, a 2D part mixed with a 3D part, an East-Asian myth, and a mechanic nobody had seen.</p>
+    <p>Before any design, Sonnet research agents checked each assumption against primary sources: the 19-page official rules, the jam page, engine and plugin release notes. They wrote one shared fact file so later agents would not research the same things twice. The most useful part was a table titled "your assumption vs reality". AWS is not a judging sponsor. Several NVIDIA and AWS plugins I had counted on have no UE 5.9 build. All text and voice must be English. Sponsor usage does not change the score, and ties are broken by re-scoring Fun at double weight.</p>
+    <p>That last line mattered more than anything else in the file.</p>
+    <p>At 00:06 Opus turned the facts into a "war room" page: a strategy per judging criterion, a model and effort matrix per stage, a live countdown, and a Gantt chart with one lane per model. It named my checkpoints after film production, from G0 Greenlight to G6 Final Cut, and budgeted about three hours of my time across all of them. Six minutes later Fable delivered three concepts built around the jam theme, each with an interactive mockup.</p>
+  </div>
+  <div class="col">
+    <p>The plan assumed an eight-hour unattended night shift for the agents. That shift never ran. I did not greenlight a concept, so there was nothing to build.</p>
+    <p>Three well-argued pitches had left me cold, and the reason was that they were written to fit a theme. At 01:05 I wrote new directions into the brief and handed them over at 09:57 on Sunday morning.</p>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<section id="pivot">
+  <div class="col">
+    <span class="sec-no">03</span>
+    <h2>The pivot: make it fun, make it Wukong</h2>
+    <p class="when">Sunday 09:57 → 12:03</p>
+    <p class="lede">The new brief was shorter and blunter. Set the theme aside and make the most fun game possible, since Fun is the tie-breaker and a forced theme was hurting the ideas. The subject is Sun Wukong, a myth everyone knows, so a five-to-ten-minute game can start fast. AWS is out. The deadline is 22:00 tonight. And before any concept art is paid for, show me ten cheap concepts.</p>
+    <p>I also asked for a AAA-style third-person action feel for the 3D half. The crew drew a line before doing anything else: study the grammar of the genre (lighting, camera, dodge-first combat, boss pacing) but never the characters, bosses, levels or UI of Black Myth: Wukong or any other game, and never feed anyone's media to a generator. The jam forbids third-party IP, and copying would have put the entry at risk. One of the ten concepts was later cut because its setting sat too close to an existing title.</p>
+    <p>While Fable wrote concepts, Opus checked my keys with free calls and found a money problem. The 3,200 Tripo credits from the jam perk live in Tripo Studio, the web app. The API wallet read zero, and the two are separate purchases. Opus estimated $10 to $20 to top up. I declined and decided to do the generation by hand in Studio from prompts the crew would write. That made me part of the critical path, which I accepted.</p>
+    <p>One mistake from this hour belongs on the record. I had pasted an API key into a notes file that git was tracking. Opus moved it out before the first commit touched it and made the repository ignore secret files. Nothing leaked, but it was closer than I would like.</p>
+  </div>
+
+
+  <div class="col">
+    <h3>Two misreads in twenty-five minutes</h3>
+    <p>I told the crew the 2D part should be a top-down town that lives on its own, in the spirit of the simulated town from the <em>Generative Agents</em> research paper (Park et al., 2023): residents with routines, talking to each other in passing. That made the five side-view art styles Fable had prepared irrelevant.</p>
+    <p>Fable re-ranked the concepts and chose number four, a village where a demon hides among the residents. I stopped it at once. I did not want a deduction puzzle set in a town. I wanted the simulation itself.</p>
+    <blockquote>No. Different from #4. It must move like that town.<cite>My note at 11:05</cite></blockquote>
+    <p>Instead of guessing a third time, the crew asked three questions in one dialog. What does the player do there? Show me options as moving mockups. Do residents think with a live language model? No, write their routines and lines in advance. Whose town? All three: the monkey kingdom, the Heavenly Palace, and a village on the road west.</p>
+    <p>Then I test-generated the first art prompts and found two more problems. The 2D art looked like a comic next to the photoreal 3D, so a switch between them would feel like changing games. And the hero did not read as Wukong. Fable had given him granite skin and gold seams to avoid the risk of photoreal fur, which was a production convenience bought with the protagonist's identity. I asked for a furred Monkey King built from the novel's own items: the golden fillet, a vermilion vest, a tiger-skin kilt, the gold-banded staff.</p>
+  </div>
+  <figure>
+    <img src="images/03-hero-refs.jpg" alt="Three reference images of a furred Monkey King in a red brocade vest and tiger-skin kilt, seen from the front, three-quarter and back" loading="lazy" width="1600" height="900">
+    <figcaption>The hero after the correction: front, three-quarter and back references, generated from the rewritten prompts. The front view became the 3D model.</figcaption>
+  </figure>
+
+
+  <div class="col">
+    <h3>What I said no to</h3>
+    <p>The Glass Box brief asks how the game was made. A good part of the answer is what it is not. This is the running list of proposals I turned down, from the crew and from myself.</p>
+  </div>
+  <div class="tbl">
+    <table>
+      <thead><tr><th>When</th><th>Rejected</th><th>Why</th></tr></thead>
+      <tbody>
+        <tr><td class="t">Sun 00:12</td><td class="wrap">Three theme-first concepts</td><td class="wrap">Clever on paper, not games I wanted to make</td></tr>
+        <tr><td class="t">01:05</td><td class="wrap">The jam theme as a design driver; a dedicated server on AWS</td><td class="wrap">Fun is the tie-breaker; AWS is not a jam sponsor</td></tr>
+        <tr><td class="t">10:52</td><td class="wrap">Topping up the Tripo API</td><td class="wrap">The jam credits were already sitting in Studio</td></tr>
+        <tr><td class="t">11:05</td><td class="wrap">A hidden-demon deduction village</td><td class="wrap">I wanted a town that lives, not a puzzle wearing one</td></tr>
+        <tr><td class="t">11:30</td><td class="wrap">A stone-skinned hero; comic-style 2D art; residents driven by a live model</td><td class="wrap">He has to read as Wukong; two art styles felt like two games; pre-written lines are safer and cheaper</td></tr>
+        <tr><td class="t">13:47</td><td class="wrap">Towns as a resource game (command, steal, help)</td><td class="wrap">I played it. It was not fun</td></tr>
+        <tr><td class="t">18:31</td><td class="wrap">A marketplace explosion effect</td><td class="wrap">It rendered as a screen full of orange balls</td></tr>
+        <tr><td class="t">23:22</td><td class="wrap">Chevron arrows on charge warnings; round boulders on the fight floor</td><td class="wrap">Both looked wrong on the phone</td></tr>
+        <tr><td class="t">23:38</td><td class="wrap">An interim title that lasted four minutes</td><td class="wrap">It echoed another game's name</td></tr>
+        <tr><td class="t">Mon 00:21</td><td class="wrap">The first boss's shield attack; the peach heal; half of the town dialogue; all four menu designs</td><td class="wrap">Second phone playtest: too hard, too odd, too much talking</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<section id="art">
+  <div class="col">
+    <span class="sec-no">04</span>
+    <h2>The art pipeline</h2>
+    <p class="when">Sunday 11:45 → 13:12</p>
+    <p class="lede">The pipeline has four steps and a person in the middle of it. Fable writes prompts. I generate reference images with GPT image generation. I turn the hero, bosses and weapons into 3D models in Tripo Studio and rig them there. The crew imports them, retargets animation onto them, and puts them in the game.</p>
+    <p>Fable's prompt pack had 22 copy-and-paste prompts with settings and file names: the hero from three angles, a 3D key frame, aerial plates for each town, resident sheets, three bosses, arenas and props. I ran the whole pack in about five minutes and came back with 24 images.</p>
+  </div>
+  <figure>
+    <img src="images/09-reference-sheet.jpg" alt="A grid of twelve generated reference images: aerial town plates, arena key frames, the hero key frame and a resident sheet" loading="lazy" width="1600" height="900">
+    <figcaption>Twelve of the 24 reference images from 12:10. The aerial plates in here are not concept art for the towns. They are the towns: the game draws its residents directly on top of them.</figcaption>
+  </figure>
+  <div class="col">
+    <h3>Cutting 48 residents out of grey</h3>
+    <p>The resident sheets came on a grey background, and a plain colour key tore holes in every grey sleeve and every patch of grey fur. Opus switched to keying by connectivity. Only grey that touches the image border counts as background, and a flatness test catches enclosed pockets such as the gap between a carrying pole and its bucket. A later pass fixed the village sheet, where speckled holes remained, by lowering the tolerance and closing small gaps.</p>
+  </div>
+  <figure>
+    <img src="images/09-resident-sprites.jpg" alt="Rows of small cut-out character sprites on alternating dark and light bands" loading="lazy" width="1600" height="900">
+    <figcaption>Most of the 48 cut-out residents on dark and light bands, the quickest way to see holes and halos.</figcaption>
+  </figure>
+  <div class="col">
+    <h3>The hero, by hand, in Tripo Studio</h3>
+    <p>I built the hero myself between 12:20 and 12:35. Multiview-to-3D turned out to need a subscription, so the model came from the single front image. One pass gave the Monkey King a perfectly human face. After several rounds I switched on every quality option the free tier offers, re-topologised to 10,000 triangles, and auto-rigged with the UE5 Manny skeleton.</p>
+    <p>That last option was the most valuable click of the weekend. Opus inspected the exported file before it went near the engine: one mesh, 9,506 triangles, one PBR material, and 80 joints named exactly like Unreal's own mannequin. A skeleton with those names can use the engine's animation library through IK retargeting. It had no tail bones, so the tail follows the hips, and it was a metre tall and facing the wrong axis, both fixed at import.</p>
+  </div>
+  <figure>
+    <div class="duo">
+      <img src="images/10-tripo-face.jpg" alt="A 3D model of the Monkey King with an unmistakably human face" loading="lazy" width="1600" height="900">
+      <img src="images/10-tripo-autorig.jpg" alt="The final hero model in an A-pose with a skeleton overlaid" loading="lazy" width="1600" height="900">
+    </div>
+    <figcaption>Left: a mid-way attempt in which the Monkey King came out as a man in a wig. Right: the final model after auto-rigging onto the Manny skeleton.</figcaption>
+  </figure>
+  <figure>
+    <img src="images/10-tripo-bosses.jpg" alt="Three armoured boss models side by side: black and bronze, red and gold, silver and teal" loading="lazy" width="1600" height="900">
+    <figcaption>The three bosses I made the same way that afternoon. They arrived as anonymous files, and the crew matched each to its chapter by reading the colours of its texture: black and bronze, red and gold, silver and teal.</figcaption>
+  </figure>
+  <div class="col">
+    <h3>Motion from Mixamo</h3>
+    <p>Tripo's own animation presets cover eleven basic moves, so signature attacks had to come from somewhere else. Opus chose clips from Mixamo's library and mapped each to an attack in the fight data. Two-handed weapon sets read well as staff fighting. The final count is 54 clips, retargeted from Mixamo's skeleton to Manny to our characters by a pipeline that runs entirely from the command line: import, IK rig, retargeter, verification. They are sourced assets and are declared as such.</p>
+    <p>The first retarget bent Wukong's feet backwards. The fix was to drive the legs with plain forward kinematics from the bind pose and switch off the template's foot IK.</p>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<section id="first-light">
+  <div class="col">
+    <span class="sec-no">05</span>
+    <h2>First light</h2>
+    <p class="when">Sunday 11:03 → 13:40</p>
+    <p class="lede">The Unreal project was created at 11:03, an hour before I had chosen a game. A Sonnet agent bootstrapped it from the C++ Third Person template while design was still being argued, because none of that work depended on which concept won.</p>
+    <p>Fable, meanwhile, wrote the game as data so that engineers could build systems before content was final. The design document came with six JSON tables: towns, landmarks, walkable graphs, residents with schedules, conversation lines and boss fights. Every position is a normalised coordinate read off the actual painted plate. There are 263 subtitle lines across 125 resident conversations, all written in advance.</p>
+  </div>
+  <figure>
+    <img src="images/11-kingdom-navgraph.jpg" alt="The aerial painting of the monkey kingdom with a graph of nodes and paths drawn over it" loading="lazy" width="1600" height="900">
+    <figcaption>The kingdom's walkable graph and landmarks drawn over the generated plate. Residents follow these paths on their daily schedules.</figcaption>
+  </figure>
+  <div class="col">
+    <p>The slowest thing all weekend was the first package. A source-built engine compiles the whole engine for the game target the first time: 1,066 compile actions took 1 hour 45 minutes, and cooking took another 36. Starting that on day one, before there was a game, is the only reason a build reached me by early afternoon. The template alone packaged to 0.68 GB, which made size a constraint from the first hour.</p>
+    <p>At 13:35 the Opus gameplay lead committed the jam game, and by 13:40 Chapter I played from title to results card. That is 97 minutes after greenlight. All of it is C++ driven by Fable's data files, with no Blueprints.</p>
+    <p>The most useful thing the lead built that hour was not a feature. One command-line switch makes the game play itself and save a screenshot at every notable moment. From then on, agents could check their own builds without a person at the controls, and I could check their claims by looking at pictures.</p>
+  </div>
+  <figure>
+    <div class="duo">
+      <img src="images/14-chapter-card-living-town.jpg" alt="The top-down town with small residents carrying name tags, a day dial and resource counters" loading="lazy" width="1600" height="900">
+      <img src="images/14-town-command-subtitles.jpg" alt="The same town with a subtitle line from a resident" loading="lazy" width="1600" height="900">
+    </div>
+    <figcaption>Chapter I at 13:40, captured by the game playing itself. Residents walk their schedules with name and activity tags and trade pre-written lines when they meet.</figcaption>
+  </figure>
+  <figure>
+    <div class="duo">
+      <img src="images/14-threshold-crossing-card.jpg" alt="A card explaining what the town's resources will do in the coming fight" loading="lazy" width="1600" height="900">
+      <img src="images/14-fight-intro-placeholder-arena.jpg" alt="The hero standing in a nearly empty grey arena" loading="lazy" width="1600" height="900">
+    </div>
+    <figcaption>The crossing card, and what waited on the other side at this stage: the real hero in a placeholder arena against a placeholder boss.</figcaption>
+  </figure>
+</section>
+
+<!-- ============================================================ -->
+<section id="dailies">
+  <div class="col">
+    <span class="sec-no">06</span>
+    <h2>"The town isn't fun"</h2>
+    <p class="when">Sunday 13:47 → 16:05</p>
+    <p class="lede">The first packaged build with all three chapters reached me two hours ahead of the plan. I played it for ten minutes and wrote the bluntest note of the project.</p>
+    <blockquote>The sprites don't animate, and the town gameplay is not fun at all.<cite>Dailies note, 13:47</cite></blockquote>
+    <p>The design read well on paper. Each town had its own verb (command the monkeys, steal from the banquet, help the villagers) and what you earned there became your resources in the fight. In the hand it was a chore between you and the boss. I asked for the town to become a short walk and a few conversations, and for the fun to live in the fight.</p>
+    <p>Fable rewrote the towns as quest hubs within the hour. Each has a few residents to talk to; each gives a story beat, a hint about the boss, or a small boon such as longer attack warnings. The residents kept their daily routines, now as ambience. The resource grind was retired.</p>
+    <p>My notes on the 3D half were just as direct: the feet bend wrongly, the staff is not really held, the hits feel rough. The lead turned its effort to the fight.</p>
+
+    <h3>Three arenas in an afternoon</h3>
+    <p>Sonnet built the arenas as separate maps streamed into the fight: a waterfall ledge, a palace terrace above the clouds, a frozen river at night. The trick that made this possible in hours was to hang my generated key frame as a matte painting behind the boss and build real 3D only in front of it. All three ran at 145 to 170 frames per second on the PC.</p>
+    <p>They also had obvious problems. Spheres, cones and box tables stood in for props. The fight camera let the hero cover the boss. The boss sometimes turned his side to you.</p>
+  </div>
+  <figure>
+    <div class="trio">
+      <img src="images/16-arena-ch1-first-light.jpg" alt="A wet stone ledge in front of a painted waterfall, with a placeholder boss" loading="lazy" width="1600" height="900">
+      <img src="images/16-arena-ch2.jpg" alt="A palace terrace with an armoured boss and box-shaped props" loading="lazy" width="1600" height="900">
+      <img src="images/16-arena-ch3.jpg" alt="A frozen river at night" loading="lazy" width="1600" height="900">
+    </div>
+    <figcaption>The three arenas between 14:36 and 15:30. The second has its real boss and props made of boxes. Compare the same terrace three hours later in the next figure.</figcaption>
+  </figure>
+  <figure>
+    <div class="ba">
+      <img src="images/ba-arena2-b.jpg" alt="After: the Marshal lit by low sun in front of a detailed palace, with his name card" loading="lazy" width="1600" height="900">
+      <div class="top"><img src="images/ba-arena2-a.jpg" alt="Before: the Marshal on a flat terrace with box props" loading="lazy" width="1600" height="900"></div>
+      <span class="tag l">15:30</span><span class="tag r">18:21</span><span class="knob" aria-hidden="true">&harr;</span>
+      <input type="range" min="0" max="100" value="50" aria-label="Compare the palace arena before and after the polish pass">
+    </div>
+    <figcaption>Drag to compare. Chapter II at 15:30, and the boss reveal on the same terrace at 18:21 after the arena pass and the intro camera work.</figcaption>
+  </figure>
+  <div class="col">
+    <h3>A wrong diagnosis, corrected</h3>
+    <p>A browser agent tried to fetch the Mixamo clips and a free sound pack through my Chrome. The sites reported success and no file appeared. The crew checked the profile settings, ruled out a hidden save dialog, and concluded, in writing, that downloads started from a controlled tab never reach disk. The task came back to me.</p>
+    <p>Within the hour I found the files. My Chrome saves to a different drive, and the crew had only looked in the default folder. Four copies of the same test file sat there, timestamped to the minute of each attempt. The devlog entry was corrected and the download run resumed. A confident "it cannot work" needs as much evidence as "it works".</p>
+    <p>The same hour had a better surprise. The launcher could not add marketplace packs to a source-built engine project, but its download cache already held packs I owned: 61 magic effects, a lightning set, a basic effects set and 50 sounds. With two CC0 sound packs from Kenney, that was enough for real sparks, slams and impacts without downloading anything new.</p>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<section id="bosses">
+  <div class="col">
+    <span class="sec-no">07</span>
+    <h2>Three bosses who do not fight alike</h2>
+    <p class="when">Sunday 16:30 → 18:40</p>
+    <p class="lede">The release candidate at 16:29 passed a full self-played run, and I raised the bar anyway. The three bosses shared one rig, one animation set and one AI with three sets of numbers. That was the plan, and it showed. I wrote that they fight alike.</p>
+    <p>Fable redesigned them from character and weapon, and by 17:32 the lead had it in code. Each boss now reads his own section of the fight data.</p>
+    <p><strong>The Demon King of Confusion</strong> is a slow brawler and the only one who lies. He delays a strike to catch an early dodge. His Liar's Chop raises the weapon exactly as his honest overhead does, stops, laughs, then hooks and spins. His warnings on the ground are solid molten red.</p>
+    <p><strong>The Marshal of the Hall</strong> never feints. Every attack starts on a 250-millisecond beat. Sweep and spin always come as a pair half a second apart; three jabs, a held breath, then a seven-metre lunge. His warnings are gold seals that fill on the beat, so you can learn him like a song.</p>
+    <p><strong>The King of the Frozen River</strong> glides without moving his legs. His wind-ups are the longest and his strikes the shortest. Frost grows out from him and flashes white for the last 150 milliseconds. At 40 percent health a second phase adds water spouts under your feet.</p>
+  </div>
+  <figure>
+    <div class="duo">
+      <img src="images/19-intro-namecard-ch1.jpg" alt="The Demon King of Confusion with a spiked club, shown with his name card in front of a waterfall" loading="lazy" width="1600" height="900">
+      <img src="images/19-ch3-copper-hammer.jpg" alt="The River King mid-attack with a pale disc of frost spreading on the ice" loading="lazy" width="1600" height="900">
+    </div>
+    <figcaption>Left: the Demon King's reveal and name card at 18:30. Right: the River King's Copper Hammer, with its frost warning on the ice.</figcaption>
+  </figure>
+  <figure>
+    <img src="images/18-weapon-refs.jpg" alt="Reference images of a red and gold staff, a spiked club, a great sword and a trident" loading="lazy" width="1600" height="900">
+    <figcaption>The four weapon references. I modelled each in Tripo Studio that afternoon; the crew normalised them, built materials and attached them to hand sockets. That is where the trouble in section 10 starts.</figcaption>
+  </figure>
+  <div class="col">
+    <p>Around the bosses the crew added a reveal before each fight, a camera push-in on charged attacks, a gold glint along the staff while a perfect-dodge counter is ready, and one change to the towns that I had not asked for but liked at once. The flat hero sprite was replaced by the real 3D Wukong, rendered onto the painted plate, so the same character walks in both halves of the game.</p>
+  </div>
+  <figure>
+    <img src="images/19-town-3d-avatar.jpg" alt="The top-down monkey kingdom with a small 3D Wukong standing among sprite residents, a quest list and a dialogue box" loading="lazy" width="1600" height="900">
+    <figcaption>The kingdom at 18:10 with the 3D hero drawn onto the plate, the quest list at top right and a resident mid-sentence.</figcaption>
+  </figure>
+</section>
+
+<!-- ============================================================ -->
+<section id="audio">
+  <div class="col">
+    <span class="sec-no">08</span>
+    <h2>Sound: Suno, Kenney, and three voices from NVIDIA</h2>
+    <p class="when">Sunday 12:45 → 17:12</p>
+    <p class="lede">I made the music in Suno from prompts Fable wrote. The pack describes twelve instrumental cues built around one pentatonic motif. The main theme carries it; the opening, the three boss themes and the ending were to be made from that theme with Suno's Cover feature so the melody follows the player through the game. Keys stay in one family and tempos sit at 80, 120 and 160 beats per minute. No prompt names an artist or a work.</p>
+    <p>I delivered seven tracks in the first batch, in time for the 15:07 build, and the crew normalised them to a common loudness before import.</p>
+    <p>Sound effects come from two CC0 packs by Kenney, 182 sounds converted to WAV, plus the 50-sound pack from my own library. Which sound and which effect play for which event is not in code. It lives in one data file that maps an event name to an asset, a scale and a colour, with per-boss overrides, so an integrator agent could tune the feel of every hit while the gameplay lead stayed on stability.</p>
+    <p>The boss voices are synthetic and I want to be plain about that. A Sonnet agent called NVIDIA's Magpie TTS directly over gRPC to generate 43 English voice assets: seven spoken lines per boss, plus attack, hurt, roar, death and laugh sets. Each boss was then shaped differently: a cave growl for the Demon King, a voice inside a helmet for the Marshal, and an icy two-voice whisper for the River King. In the 18:33 regression run, thirteen voice lines fired per fight.</p>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<section id="crew">
+  <div class="col">
+    <span class="sec-no">09</span>
+    <h2>Running the crew, and what broke</h2>
+    <p class="when">All day, worst around 21:30</p>
+    <p class="lede">From early afternoon there were usually four or five agents working at once. An Opus orchestrator held the conversation with me, split my notes into briefs, and reviewed results. Under it sat a gameplay lead with its own sub-agents, an arena builder, an audio and effects integrator, and at times a writer or a researcher. This is how that was kept from collapsing, and the four times it nearly did.</p>
+
+    <h3>What held it together</h3>
+    <p>Each note of mine went to exactly one agent, and no fix counted as done until the orchestrator had looked at screenshots of it in a real fight. Shared facts lived in files, not in anyone's memory. Design reached code only as data: Fable edited JSON in the docs repository, and a sync step copied it into the game, so a designer and an engineer never edited the same file.</p>
+    <p>Commits were small and written as explanations. That paid off at around 17:00, when the gameplay lead ran out of context after four hours and dozens of features. Nothing was lost. A fresh Opus lead read the commit log and the README and carried on from the next line. Small, well-described commits turned out to be an agent's long-term memory as much as mine.</p>
+    <p>Only one Unreal editor can safely build at a time, so agents took turns with a lock. When the Android work began, that agent got its own copy of the repository so its long builds would not block everyone else.</p>
+
+    <h3>One engine, five agents</h3>
+    <p>The worst hour of the project came from an attempt to save time. The orchestrator suggested a build flag that skips the engine's own mutual-exclusion check. Two editor builds then raced on shared engine files, and the engine's build ID changed underneath everyone.</p>
+    <p>From that moment every test game stopped on a dialog saying its modules were built with a different engine version. Nobody was there to click it. The hung games held engine libraries open, so every rebuild failed too. Games that agents had launched in the background kept the engine's live-coding feature running and blocked the next build. One agent waited 45 minutes for the lock while others took it back to back. An arena rebuild was blocked outright because the editor's modules no longer matched the engine.</p>
+    <p>The fixes were plain. One build at a time. The lock is released only after the game has exited, not when the build ends. Check the build IDs before launching anything. And an explicit order of turns, written down, so no agent starves.</p>
+
+    <h3>A message that arrived one step late</h3>
+    <p>Before the 18:33 build the orchestrator told the lead to hold the package until four visual fixes landed. A message between agents is read at the receiver's next step, and the lead had already started packaging. That build went out without the fixes. I kept it as a stable fallback and the next build collected them. The rule since then is to send the hold before the go.</p>
+
+    <h3>A permission I had to grant</h3>
+    <p>The session ran in an automatic mode in which a permission check reviews what agents try to do. When an agent went to fix a broken weapon material, the fix lay in a folder outside its brief, and the check stopped it. The orchestrator brought the question to me, I read what the agent wanted to change, and I approved it.</p>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<section id="notes">
+  <div class="col">
+    <span class="sec-no">10</span>
+    <h2>Playtest notes, before and after</h2>
+    <p class="when">Sunday 18:33 → 23:35</p>
+    <p class="lede">The build from 18:33 passed everything a machine could check. The self-play bot walked all three towns, crossed each threshold and won all three fights without dying. The logs showed no errors. Then the agents looked at their own screenshots, and the pictures disagreed with the logs.</p>
+    <p>The staff and all three boss weapons were flat grey. The Chapter I floor was covered in black torn-paper shapes. One marketplace effect filled the screen with untextured orange balls. Chapter III had dark boxes beside the boss. None of these fails a test. All of them ruin the picture.</p>
+    <p>I played that build and sent three rounds of notes over the next three hours. These are the ones with evidence on both sides.</p>
+  </div>
+
+  <figure>
+    <div class="ba">
+      <img src="images/ba-ch1-b.jpg" alt="After: a clean mossy floor, a red and gold staff, and distant cliffs behind the boss" loading="lazy" width="1600" height="900">
+      <div class="top"><img src="images/ba-ch1-a.jpg" alt="Before: black torn shapes on the floor and a flat grey staff" loading="lazy" width="1600" height="900"></div>
+      <span class="tag l">18:33</span><span class="tag r">23:33</span><span class="knob" aria-hidden="true">&harr;</span>
+      <input type="range" min="0" max="100" value="50" aria-label="Compare Chapter I before and after the fixes">
+    </div>
+    <figcaption>Chapter I, five hours apart. Before: black shapes on the floor, a grey staff, flat painted cards close behind the boss. After: the staff shows its texture, the floor is clean, and the backdrop is one 170-metre panorama with real cliffs in front of it.</figcaption>
+  </figure>
+
+  <div class="col">
+    <h3>Grey weapons</h3>
+    <p>The weapon material loaded a default texture from a path that does not exist in UE 5.9. It failed to compile on the newest shader model and quietly fell back to the engine's grey default. The fix was three null defaults, committed at 19:12, and it is the fix that needed my approval in the previous section.</p>
+
+    <h3>"The bosses hold the blade, not the handle"</h3>
+    <p>The Marshal carries a great sword. The import script guessed which end of a weapon is the head by its width, took the wide guard for the head, and put his hand 54 centimetres up the blade. A per-weapon grip offset and flip in data fixed it, and the orchestrator checked more than forty close-ups across all three bosses. My next note was that the weapons were still not held straight, so the weapon axis now follows the line of the knuckles of the closed fist.</p>
+  </div>
+  <figure>
+    <img src="images/20-boss2-sword-grip.jpg" alt="A close-up of the Marshal holding his great sword by the hilt" loading="lazy" width="1600" height="900">
+    <figcaption>The Marshal at 20:02, hand on the hilt. A new test switch poses each boss through every wind-up and strike and saves a close-up, which is how forty of these could be reviewed in minutes.</figcaption>
+  </figure>
+
+  <figure>
+    <div class="ba">
+      <img src="images/ba-herogrip-b.jpg" alt="After: Wukong holds the staff diagonally with both fists closed on the shaft" loading="lazy" width="1600" height="900">
+      <div class="top"><img src="images/ba-herogrip-a.jpg" alt="Before: Wukong holds the staff upright with one hand while the other floats" loading="lazy" width="1600" height="900"></div>
+      <span class="tag l">23:39</span><span class="tag r">23:59</span><span class="knob" aria-hidden="true">&harr;</span>
+      <input type="range" min="0" max="100" value="50" aria-label="Compare the hero's staff grip before and after">
+    </div>
+    <figcaption>The same problem on the hero, found on the phone much later. The first fix at 23:39 straightened the staff but left one hand floating. My note was that when both hands are on the staff, both hands must be on the staff. The right "grip" had been the wrist bone; arm IK now closes both fists on the shaft.</figcaption>
+  </figure>
+
+  <div class="col">
+    <h3>"Show the boss's face"</h3>
+    <p>The reveal before each fight sometimes showed the boss's back. The intro cameras were fixed markers placed in each arena that knew nothing about which way he faced. Every shot is now chosen within 60 degrees of his facing, and he turns toward Wukong before the name card appears.</p>
+
+    <h3>"It looks like paper stuck right behind it"</h3>
+    <p>I was right, because it was. The backdrops were a ring of flat painted cards a few metres past the arena edge. Sonnet replaced them with one continuous panorama cylinder 170 metres across, with real cliffs, roofs and willows in the middle distance. You can see the difference in the first slider of this section.</p>
+
+    <h3>Black rocks you could stand inside</h3>
+    <p>I reported that characters could fight inside rocks. The lead added proper sweeps and push-out to character movement, which was needed, but the real culprit was stranger. The five boulders in Chapter I were inside-out meshes. They drew as black half-shells with no matching collision, so they looked like rocks you could walk into because, in every sense that mattered, they were.</p>
+  </div>
+  <figure>
+    <div class="ba">
+      <img src="images/ba-boulders-b.jpg" alt="After: rounded, lit boulders on the waterfall ledge" loading="lazy" width="1600" height="900">
+      <div class="top"><img src="images/ba-boulders-a.jpg" alt="Before: black half-shell shapes scattered on the waterfall ledge" loading="lazy" width="1600" height="900"></div>
+      <span class="tag l">21:43</span><span class="tag r">23:21</span><span class="knob" aria-hidden="true">&harr;</span>
+      <input type="range" min="0" max="100" value="50" aria-label="Compare the Chapter I boulders before and after">
+    </div>
+    <figcaption>The inside-out boulders, and the replacements committed at 22:10. At 23:35, after seeing them on the phone, I had the round boulders removed from the fight floor altogether.</figcaption>
+  </figure>
+
+  <div class="col">
+    <h3>The camera inside a rock</h3>
+    <p>My note was not to pull the camera in when something is in the way, because the sudden zoom was worse than the obstruction. The camera arm now keeps its length and whatever comes between the lens and Wukong fades out. The first version missed one case, which the telegraph agent's own screenshots caught: if the camera started inside a boulder, the sweep reported no hit, and the screen filled with blurred rock.</p>
+  </div>
+  <figure>
+    <div class="ba">
+      <img src="images/ba-camera-b.jpg" alt="After: the same charge attack with the camera clear, showing the boss, the hero and a pale warning lane on the ground" loading="lazy" width="1600" height="900">
+      <div class="top"><img src="images/ba-camera-a.jpg" alt="Before: the whole screen filled with a blurred brown rock texture" loading="lazy" width="1600" height="900"></div>
+      <span class="tag l">21:43</span><span class="tag r">23:21</span><span class="knob" aria-hidden="true">&harr;</span>
+      <input type="range" min="0" max="100" value="50" aria-label="Compare the camera inside a rock with the fixed camera">
+    </div>
+    <figcaption>The Demon King's Bull Rush at the same moment of its wind-up. Before, the camera sits inside a boulder. After, anything overlapping the lens fades.</figcaption>
+  </figure>
+
+  <div class="col">
+    <h3>"The warnings on the ground look cheap"</h3>
+    <p>They were built from engine primitives: fans of flat planes, rings of 32 cubes, flattened cylinders. An Opus agent replaced the lot with one flat quad per warning and a procedural material that draws the shape mathematically, with a look per boss. A follow-up made the Marshal's gold translucent after a large warning turned the white marble into a white screen.</p>
+  </div>
+  <figure>
+    <div class="ba">
+      <img src="images/ba-tele2-b.jpg" alt="After: a translucent gold disc with a brighter rim on the marble floor" loading="lazy" width="1600" height="900">
+      <div class="top"><img src="images/ba-tele2-a.jpg" alt="Before: an opaque flat yellow disc covering the floor" loading="lazy" width="1600" height="900"></div>
+      <span class="tag l">20:18</span><span class="tag r">22:16</span><span class="knob" aria-hidden="true">&harr;</span>
+      <input type="range" min="0" max="100" value="50" aria-label="Compare the Marshal's ground warning before and after">
+    </div>
+    <figcaption>Heaven's Hammer in Chapter II. Before, an opaque yellow disc made of primitives. After, a single quad whose fill and rim are drawn by the material, so the marble shows through.</figcaption>
+  </figure>
+  <figure>
+    <img src="images/20-telegraphs-ch3.jpg" alt="Nine frames from the frozen river fight in a grid, showing white frost warnings growing on blue ice and the strikes that follow" loading="lazy" width="1600" height="900">
+    <figcaption>The River King's warnings, three attacks read left to right: the early warning, the white flash, the strike. Agents assembled sheets like this after every change so a whole fight could be judged in one look.</figcaption>
+  </figure>
+
+  <div class="col">
+    <h3>"Particles should make sense"</h3>
+    <p>Marketplace explosions shrunk to two percent of their size rendered as balls. The staff trail was a string of 22-centimetre spheres. The integrator built a gallery map that shows every mapped effect at its real in-game scale, then went through all of them. Broken ones were removed and the rest became native-size sparks, frost and seal bursts.</p>
+  </div>
+  <figure>
+    <div class="duo">
+      <img src="images/20-vfx-ch3-before.jpg" alt="Four frames of the frozen river fight with strings of pale spheres, a cyan block and an oversized burst" loading="lazy" width="1600" height="900">
+      <img src="images/20-vfx-ch3-after.jpg" alt="Four frames of the same fight with compact white bursts and no stray shapes" loading="lazy" width="1600" height="900">
+    </div>
+    <figcaption>Chapter III effects before (left) and after (right) the audit. Look for the strings of pale spheres and the cyan block on the left.</figcaption>
+  </figure>
+
+  <div class="col">
+    <h3>"Make the tutorial fun"</h3>
+    <p>The original prologue taught dodging and nothing else. Its replacement, the Morning Drill, teaches every skill on a wooden training dummy in the order the first boss demands them. Small monkeys lob peach stones at you, and two marshals heckle from behind what they insist is a very strong table. It landed at 21:43 as a nine-step drill, and it is the part of the game that changed most once it met a touchscreen.</p>
+  </div>
+  <figure>
+    <img src="images/20-tutorial-smash.jpg" alt="Wukong smashing a wooden training dummy apart, with a checklist of drill steps at the left" loading="lazy" width="1600" height="900">
+    <figcaption>The Focus Smash step of the Morning Drill on PC, with the drill checklist on the left.</figcaption>
+  </figure>
+</section>
+
+<!-- ============================================================ -->
+<section id="mobile">
+  <div class="col">
+    <span class="sec-no">11</span>
+    <h2>21:00: the mobile pivot</h2>
+    <p class="when">Sunday 21:00 → Monday 00:36</p>
+    <p class="lede">An hour before my own deadline I changed the platform. The game would enter as an Android build, with a test on my phone by 23:00. It was the riskiest call of the weekend. The target was the jam's Pocket Powerhouse category, and the 18:33 Windows build stayed on disk as a fallback.</p>
+    <p>An Opus agent took the port in its own copy of the repository. It added a touch layout that drives the existing gamepad input, so no gameplay code had to learn about fingers. It caught one trap before I could: on-screen buttons re-send "pressed" every frame while held, which would have replayed dialogue and attacks at sixty times a second. The first engine compile for Android took 27 minutes. An APK existed at 22:06, and a 408.6 MB build with all the evening's fixes at 22:19.</p>
+    <p>I had called that one final. Then I installed it.</p>
+
+    <h3>What the phone said</h3>
+    <p>The agent drove the phone over adb and saved a screenshot at each stage of every round. There were six rounds between 22:55 and 00:06. The first one failed on the title screen.</p>
+  </div>
+
+  <figure>
+    <div class="ba">
+      <img src="images/ba-phone-title-b.jpg" alt="After: the final title screen filling the phone, with no controls over it" loading="lazy" width="1600" height="746">
+      <div class="top"><img src="images/ba-phone-title-a.jpg" alt="Before: the title screen with a move stick and six fight buttons drawn over the menu, and black bars at both sides" loading="lazy" width="1600" height="746"></div>
+      <span class="tag l">22:55</span><span class="tag r">00:05</span><span class="knob" aria-hidden="true">&harr;</span>
+      <input type="range" min="0" max="100" value="50" aria-label="Compare the phone title screen in round one and round six">
+    </div>
+    <figcaption>The title screen on the phone, round one and round six. In round one the move stick sat on top of the menu rows and swallowed taps: pressing BEGIN opened CREDITS. The picture was also pillarboxed, with buttons on the black bars. The title itself changed in between.</figcaption>
+  </figure>
+
+  <div class="col">
+    <h3>The tutorial that stalled</h3>
+    <p>This is the bug I would least like a judge to have found. On my phone the drill's heavy-attack step never completed, because the touch layout could not aim it the way the step expected. A global safety timer was meant to rescue stuck players. After 204 seconds it did, by skipping straight to the end of the tutorial. Dodge, perfect dodge, smash and clones were never shown.</p>
+    <p>The lead replaced the global timer with a per-step pass, added aim assist on the dummy, and then cut the heavy attack from the phone entirely. Phones got four actions: attack, dodge, a one-press smash and clones. The drill stopped showing keyboard key caps to a device with no keyboard, and a SKIP TRAINING button appeared for anyone who wants to go straight to the boss.</p>
+  </div>
+  <figure>
+    <div class="ba">
+      <img src="images/ba-phone-drill-b.jpg" alt="After: the drill on the phone with four large buttons, a skip training button and touch wording" loading="lazy" width="1600" height="746">
+      <div class="top"><img src="images/ba-phone-drill-a.jpg" alt="Before: the drill on the phone with seven controls including a camera stick, a heavy button and keyboard key hints" loading="lazy" width="1600" height="746"></div>
+      <span class="tag l">23:05</span><span class="tag r">00:05</span><span class="knob" aria-hidden="true">&harr;</span>
+      <input type="range" min="0" max="100" value="50" aria-label="Compare the tutorial on the phone before and after">
+    </div>
+    <figcaption>The Morning Drill on the phone. Before: a PC layout pressed onto a touchscreen, with a camera stick, a HEAVY button and key-cap prompts. After: fewer and larger buttons, drag anywhere on the right to look, and a way out.</figcaption>
+  </figure>
+  <figure>
+    <div class="ba">
+      <img src="images/ba-phone-town-b.jpg" alt="After: the town on the phone with one small move stick, a pause button and a dialogue box" loading="lazy" width="1600" height="746">
+      <div class="top"><img src="images/ba-phone-town-a.jpg" alt="Before: the town on the phone with all the fight buttons drawn over it" loading="lazy" width="1600" height="746"></div>
+      <span class="tag l">23:12</span><span class="tag r">00:05</span><span class="knob" aria-hidden="true">&harr;</span>
+      <input type="range" min="0" max="100" value="50" aria-label="Compare the town on the phone before and after">
+    </div>
+    <figcaption>The town has no combat and no camera, yet the early rounds drew every fight button over it and the camera stick covered the quest list. The town now gets its own layout: a move stick, a pause button, and a TALK button only when someone is in range.</figcaption>
+  </figure>
+
+  <div class="col">
+    <h3>Thirty-nine frames, then sixty</h3>
+    <p>The agent measured performance on the phone itself, a Galaxy Note20 Ultra, by launching self-played fights over adb. The Chapter I boss fight ran at 39.1 frames per second at native resolution. Rendering the 3D view at 80 percent brought it to 60.1 with a worst frame of 16.8 milliseconds. The foggy Chapter III was already at 59.6.</p>
+    <p>Two other ideas were tried and thrown out with numbers. Cheaper shadows gained nothing and added a two-second hitch. A 30 fps cap paced worse than no cap. With the later two-handed staff IK the fight holds 58 to 59. The setting is Android-only; the PC build is untouched.</p>
+  </div>
+  <figure>
+    <div class="ba">
+      <img src="images/ba-phone-fight-b.jpg" alt="After: the first boss fight on the phone with four buttons arranged around a large dodge button" loading="lazy" width="1600" height="746">
+      <div class="top"><img src="images/ba-phone-fight-a.jpg" alt="Before: the first boss fight on the phone with seven controls and a red debug message across the screen" loading="lazy" width="1600" height="746"></div>
+      <span class="tag l">23:14 · 39 fps</span><span class="tag r">00:06 · 60 fps</span><span class="knob" aria-hidden="true">&harr;</span>
+      <input type="range" min="0" max="100" value="50" aria-label="Compare the boss fight on the phone before and after">
+    </div>
+    <figcaption>The first boss fight on the phone. Before: seven controls, black bars, and a red development-build warning across the top of the screen. After: the warning is disabled in the packaged command line and checked by the build script before any APK replaces the last good one.</figcaption>
+  </figure>
+
+  <div class="col">
+    <p>Other phone notes from the same hour: hits lacked punch, so hit-stop got longer and the phone now buzzes on contact; Wukong slid when he ran, so his animation rate now follows his ground speed; text overflowed its boxes, so boxed text shrinks to fit. Each of these has a commit and a round of screenshots behind it.</p>
+  </div>
+  <figure>
+    <img src="images/21-phone-round6.jpg" alt="Four phone screenshots in a grid: title, tutorial, town and first boss fight" loading="lazy" width="1600" height="746">
+    <figcaption>Round six at 00:06: title, tutorial, town and fight, captured from the phone. This is the newest verified state of the game on a device as I write.</figcaption>
+  </figure>
+
+  <div class="col">
+    <h3>Still not right, so back to concepts</h3>
+    <p>Even at round six the touch UI felt like a PC interface that had been made to fit. My own rule is that design options arrive as pictures, not descriptions, so at 00:09 the crew delivered a page of sixteen mobile-first mockups in phone frames drawn over real device screenshots: four options each for fight controls, town, tutorial and menus. I picked one for each of the first three and rejected all four menu designs, backgrounds included. Four new ones were on the page at 00:31.</p>
+    <p>The same playtest produced gameplay cuts. The Demon King's health was halved because he was far too hard for a first boss. His shield attack looked odd and was removed. Town dialogue went from 54 lines to 18. The peach heal was replaced by a dodge with three stamina charges, where a perfect dodge refunds its charge. Those commits are timestamped between 00:21 and 00:36 on Monday and are the last ones in the history as I write.</p>
+  </div>
+  <figure>
+    <img src="images/23-mobile-ui-concepts.jpg" alt="Four phone mockups: fight controls arranged in an arc, a town with a single talk button, a tutorial with a step rail, and a pause menu with gold plaques" loading="lazy" width="1600" height="900">
+    <figcaption>From the mobile UI concepts page. Three of these directions are the ones I chose for fight, town and tutorial; the fourth is one of the new menu candidates. They are designs under construction, not screenshots of the shipped game.</figcaption>
+  </figure>
+</section>
+
+<!-- ============================================================ -->
+<section id="cutscenes">
+  <div class="col">
+    <span class="sec-no">12</span>
+    <h2>Cutscenes from Higgsfield</h2>
+    <p class="when">Sunday 20:30 → 22:58</p>
+    <p class="lede">The cutscenes are mine, made with Higgsfield's image-to-video while the agents were fixing rocks. The crew's part was to make that as quick as possible for someone who had never used the tool under pressure.</p>
+    <p>Their first guide assumed a screen I did not have. I sent a screenshot of the one I did, and the guide was rewritten around it, down to an annotated picture of my own generator bar with eleven numbered controls. Start frames for the boss intros were composed in ChatGPT from the earlier references, so each video opens on a character that matches his in-game model.</p>
+    <p>The plan was seven clips. Credits ran short: three boss intros cost 160 each and one mistake cost another 160, which left about 360. Plan B dropped the per-town openings and spent what remained on one strong opening shot. When the first three intros came back sharing one camera move, a low push-in on a walking boss, the crew rewrote the second and third so each matches how its boss fights: a locked symmetrical march for the Marshal, a still figure far out in fog for the River King.</p>
+    <p>A small script assembles my raw clips into the four in-game movies with ffmpeg: 1080p, 30 frames per second, no audio because the game plays its own, and the title card burned into the opening. They were committed at 22:58. The title card was re-rendered twice in the next forty minutes as the game's name changed.</p>
+  </div>
+  <figure>
+    <div class="duo vids">
+      <video class="loop" muted loop playsinline preload="none" poster="images/loop-opening-poster.jpg" width="1280" height="720" aria-label="Opening cutscene: Wukong on a cliff above a misty valley"><source src="video/loop-opening.mp4" type="video/mp4"></video>
+      <video class="loop" muted loop playsinline preload="none" poster="images/loop-demon-king-poster.jpg" width="1280" height="720" aria-label="Boss intro: the Demon King of Confusion in front of a waterfall"><source src="video/loop-demon-king.mp4" type="video/mp4"></video>
+      <video class="loop" muted loop playsinline preload="none" poster="images/loop-marshal-poster.jpg" width="1280" height="720" aria-label="Boss intro: the Marshal of the Hall walking out of a palace gate"><source src="video/loop-marshal.mp4" type="video/mp4"></video>
+      <video class="loop" muted loop playsinline preload="none" poster="images/loop-river-king-poster.jpg" width="1280" height="720" aria-label="Boss intro: the King of the Frozen River standing on moonlit ice"><source src="video/loop-river-king.mp4" type="video/mp4"></video>
+    </div>
+    <figcaption>A few seconds from each shipped cutscene, silent as they are in the game: the end of the opening with its title card, then the Demon King, the Marshal and the River King.</figcaption>
+  </figure>
+  <figure>
+    <img src="images/22-opening-in-game.jpg" alt="The opening cutscene playing inside the game window" loading="lazy" width="1600" height="900">
+    <figcaption>The opening playing inside the Windows build at 00:26, captured by the self-play switch to confirm the movie is packaged and plays.</figcaption>
+  </figure>
+</section>
+
+<!-- ============================================================ -->
+<section id="qa">
+  <div class="col">
+    <span class="sec-no">13</span>
+    <h2>QA and packaging: where it stands</h2>
+    <p class="when">As of Monday 00:40</p>
+    <p class="lede">Testing on this project had three layers, and each caught things the others could not.</p>
+    <p><strong>The game plays itself.</strong> A command-line switch runs any chapter unattended, with a strong setting that lets the bot win. It checks that the flow never dead-ends and that the logs stay clean of errors and asserts. It was run before every build that reached me.</p>
+    <p><strong>Agents read their own screenshots.</strong> Each run saves a frame at every attack, warning and card. Purpose-built variants followed: weapon-grip close-ups, an effects gallery, phone-resolution layout audits on the PC, and a mode that opens each menu so text can be checked for overflow. Grey weapons, black floors and the camera inside a rock were all caught this way, with green logs.</p>
+    <p><strong>I play it.</strong> Nothing above found that the town was dull, that three bosses fought alike, or that a phone tutorial could not be finished. Those took a person.</p>
+
+    <h3>Packaging</h3>
+    <p>The Android build is not made by hand. A cycle script fast-forwards the Android copy of the repository, compiles, cooks, packages, and then inspects the APK: package name, 64-bit ARM, the data inside the file, a size between 300 MB and 1 GB, and the baked command line. Only if all of that passes does it replace the last good APK and its install notes. A three-line engine patch stops development builds opening a profiling port at start-up, which on Windows would have greeted judges with a firewall prompt.</p>
+
+    <h3>What is verified, and what is not</h3>
+    <p>At the time of writing, the round-six APK has been installed and walked through title, tutorial, town and first fight on the test phone, and measured at 60 fps in that fight. A Windows build was packaged at 00:24 with the cutscenes playing. The changes from the second phone playtest, and the new touch UI from the concepts page, are in progress and have not yet been through a full device round. Chapters II and III have had less time on the phone than Chapter I. If something in the submitted build differs from this page, that hour is where it changed.</p>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<section id="lessons">
+  <div class="col">
+    <span class="sec-no">14</span>
+    <h2>What I would tell myself on Saturday</h2>
+  </div>
+  <ol class="lessons">
+    <li><b>Ask for ten cheap options before one expensive one.</b>Three polished concepts cost me a night. Ten rough ones with mockups took 39 minutes and got me to a decision before lunch.</li>
+    <li><b>Ten minutes of play outranks an hour of specification.</b>The resource-town design survived every review and died the first time I held a controller.</li>
+    <li><b>Put the two art styles side by side before committing to either.</b>One test image settled what paragraphs of description had missed.</li>
+    <li><b>Do not trade the protagonist's identity for production convenience.</b>A stone monkey was easier to render. He was also not Wukong.</li>
+    <li><b>Green logs are not a picture.</b>A self-played run with zero errors shipped grey weapons. Someone, human or agent, has to look.</li>
+    <li><b>A flag that skips a safety check moves the cost to someone else.</b>Skipping the build lock saved seconds and cost five agents most of an hour.</li>
+    <li><b>Send the hold before the go.</b>Messages between agents land at the receiver's next step. "Wait for X" has to arrive first.</li>
+    <li><b>A confident negative needs evidence too.</b>"Downloads never reach disk" was written down as fact while the files sat on another drive.</li>
+    <li><b>Small commits are an agent's memory.</b>When the lead ran out of context, its successor resumed from the log without a handover.</li>
+    <li><b>Relay requests in the asker's own words.</b>I asked for sprite sheets. The brief said "animation prompts", and I got video loops.</li>
+    <li><b>Start packaging on day one, and test on the target device as early as you can.</b>The first package took over two hours. The first phone test took one minute to fail. I should have had a phone in my hand before 22:55.</li>
+  </ol>
+</section>
+
+<!-- ============================================================ -->
+<section id="timeline">
+  <div class="col">
+    <span class="sec-no">15</span>
+    <h2>Timeline</h2>
+    <p class="when">Korea Standard Time, from the commit history</p>
+  </div>
+  <div class="tbl">
+    <table>
+      <thead><tr><th>Time</th><th>What happened</th></tr></thead>
+      <tbody>
+        <tr><td class="t">Sat 15:38</td><td class="wrap">Jam page read and translated; real deadline found to be Monday 10:59</td></tr>
+        <tr><td class="t">Sat 23:00</td><td class="wrap">Rules and sponsor research; shared fact file</td></tr>
+        <tr><td class="t">Sun 00:06</td><td class="wrap">Master plan v1; three theme-first concepts at 00:12. None greenlit</td></tr>
+        <tr><td class="t">01:05</td><td class="wrap">New directions written: set the theme aside, Sun Wukong, deadline 22:00</td></tr>
+        <tr><td class="t">10:47</td><td class="wrap">Ten Wukong concepts delivered</td></tr>
+        <tr><td class="t">11:03</td><td class="wrap">Unreal project created, in parallel with design</td></tr>
+        <tr><td class="t">11:05</td><td class="wrap">Two misreads caught: the wrong kind of town, the wrong hero</td></tr>
+        <tr><td class="t">11:44</td><td class="wrap">Living-towns design and a 22-prompt art pack</td></tr>
+        <tr><td class="t">12:03</td><td class="wrap">Greenlight. 24 reference images generated in five minutes</td></tr>
+        <tr><td class="t">12:20</td><td class="wrap">Hero modelled and rigged in Tripo Studio</td></tr>
+        <tr><td class="t">12:41</td><td class="wrap">Game design committed as data: six tables, 263 lines</td></tr>
+        <tr><td class="t">13:40</td><td class="wrap">Chapter I playable end to end; the game can play itself</td></tr>
+        <tr><td class="t">13:47</td><td class="wrap">Dailies: "the town isn't fun". Towns become quest hubs</td></tr>
+        <tr><td class="t">15:24</td><td class="wrap">All three arenas in; builds at 15:40 and 15:50</td></tr>
+        <tr><td class="t">16:29</td><td class="wrap">Release candidate passes self-play. I ask for distinct bosses</td></tr>
+        <tr><td class="t">17:11</td><td class="wrap">Boss voices from NVIDIA Magpie TTS; real weapon meshes</td></tr>
+        <tr><td class="t">17:32</td><td class="wrap">Three distinct boss AIs in code, written by a successor lead</td></tr>
+        <tr><td class="t">18:33</td><td class="wrap">Build passes regression; screenshots reveal four visual bugs</td></tr>
+        <tr><td class="t">19:12</td><td class="wrap">Grey weapons fixed after my approval</td></tr>
+        <tr><td class="t">20:02</td><td class="wrap">Boss grips and intro facing fixed; panorama backdrops at 20:17</td></tr>
+        <tr><td class="t">21:00</td><td class="wrap">Decision to enter on Android</td></tr>
+        <tr><td class="t">~21:30</td><td class="wrap">Shared-engine incident: build ID changed, test games hang, a 45-minute lock wait</td></tr>
+        <tr><td class="t">21:43</td><td class="wrap">Morning Drill tutorial; touch input</td></tr>
+        <tr><td class="t">22:06</td><td class="wrap">First APK. 408.6 MB build at 22:19</td></tr>
+        <tr><td class="t">22:55</td><td class="wrap">First phone test fails on the title screen</td></tr>
+        <tr><td class="t">22:58</td><td class="wrap">Higgsfield cutscenes in the game</td></tr>
+        <tr><td class="t">23:18</td><td class="wrap">Stalled touch tutorial fixed</td></tr>
+        <tr><td class="t">23:34</td><td class="wrap">80 percent render scale on Android: 39 to 60 fps</td></tr>
+        <tr><td class="t">23:39</td><td class="wrap">Final title: Wukong: King, Thief, Guardian</td></tr>
+        <tr><td class="t">Mon 00:06</td><td class="wrap">Phone round six verified</td></tr>
+        <tr><td class="t">00:09</td><td class="wrap">Mobile UI concepts page; second phone playtest cuts through 00:36</td></tr>
+        <tr><td class="t">Mon 10:59</td><td class="wrap">Official deadline</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<section id="ledger">
+  <div class="col">
+    <span class="sec-no">16</span>
+    <h2>Who did what</h2>
+    <p class="lede">The short version: I decided, generated and played. The crew planned, designed, coded, built and tested. Neither half would have produced this game alone, and the table tries to be exact about the boundary.</p>
+  </div>
+  <div class="tbl">
+    <table>
+      <thead><tr><th>Work</th><th>By</th><th>Detail</th></tr></thead>
+      <tbody>
+        <tr><td>Goal, brief, every gate decision</td><td><span class="who h">Human</span></td><td class="wrap">Including each rejection listed in section 03, the mobile pivot and the title</td></tr>
+        <tr><td>Rules research, fact file</td><td><span class="who a">Sonnet 5.5</span></td><td class="wrap">Synthesis by Opus 5.5</td></tr>
+        <tr><td>Master plans v1 and v2</td><td><span class="who a">Opus · Sonnet</span></td><td class="wrap">v1 by Opus at maximum effort; v2 revised by Sonnet and reviewed by Opus</td></tr>
+        <tr><td>Concepts, game design, quests, dialogue</td><td><span class="who a">Fable 5.2</span></td><td class="wrap">Thirteen concepts, the living-towns design, the data tables, boss movesets, all resident and quest lines</td></tr>
+        <tr><td>Art, music and video prompts</td><td><span class="who a">Fable · Opus</span></td><td class="wrap">Prompt packs for images, sprites, Suno and Higgsfield</td></tr>
+        <tr><td>Reference images</td><td><span class="who h">Human</span></td><td class="wrap">Generated with GPT image generation from the crew's prompts</td></tr>
+        <tr><td>3D hero, bosses, weapons</td><td><span class="who h">Human</span></td><td class="wrap">Built and rigged by hand in Tripo Studio</td></tr>
+        <tr><td>Sprite cut-out, model inspection</td><td><span class="who a">Opus 5.5</span></td><td class="wrap">48 residents; file checks before import</td></tr>
+        <tr><td>All game code</td><td><span class="who a">Opus 5.5</span></td><td class="wrap">C++ only: towns, fights, boss AI, camera, tutorial, HUD, touch input. Two successive leads plus sub-agents</td></tr>
+        <tr><td>Import and retarget pipeline</td><td><span class="who a">Opus · Sonnet</span></td><td class="wrap">Command-line import, IK rigs, 54 Mixamo clips retargeted</td></tr>
+        <tr><td>Arenas, materials, effects wiring</td><td><span class="who a">Sonnet · Opus</span></td><td class="wrap">Three arenas, panorama backdrops, ground-warning materials, the effects map</td></tr>
+        <tr><td>Music</td><td><span class="who h">Human</span></td><td class="wrap">Generated in Suno from Fable's prompts; normalised and imported by the crew</td></tr>
+        <tr><td>Boss voices</td><td><span class="who a">Sonnet 5.5</span></td><td class="wrap">43 assets generated with NVIDIA Magpie TTS and processed per boss</td></tr>
+        <tr><td>Cutscene video</td><td><span class="who h">Human</span></td><td class="wrap">Generated in Higgsfield; assembled into game movies by a crew script</td></tr>
+        <tr><td>Playtesting</td><td><span class="who h">Human</span></td><td class="wrap">Every round on PC and phone</td></tr>
+        <tr><td>Automated testing, screenshot review</td><td><span class="who a">Opus 5.5</span></td><td class="wrap">Self-play runs, contact sheets, device captures and frame timing over adb</td></tr>
+        <tr><td>Packaging, Android port</td><td><span class="who a">Sonnet · Opus</span></td><td class="wrap">Windows pipeline, then the Android build, touch controls and cycle scripts</td></tr>
+        <tr><td>Launcher icon art, final approvals, submission</td><td><span class="who h">Human</span></td><td class="wrap">Including the one permission request that needed a person</td></tr>
+        <tr><td>Animation clips, sound effects, effect packs, fonts, project template</td><td><span class="who s">Sourced</span></td><td class="wrap">Listed in the next section</td></tr>
+        <tr><td>This development log</td><td><span class="who a">Crew</span></td><td class="wrap">Written by a crew agent from the running making-of log and both commit histories, and published only after my review</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<section id="credits">
+  <div class="col">
+    <span class="sec-no">17</span>
+    <h2>Credits and tools</h2>
+    <p><strong>Direction, design, playtesting:</strong> Ryan Ham, team Banana-Makes-Sense.</p>
+    <p><strong>The crew:</strong> Claude Fable 5.2, Claude Opus 5.5 and Claude Sonnet 5.5, working as agents in Claude Code.</p>
+    <ul class="tight">
+      <li><strong>Engine:</strong> Unreal Engine 5.9 MegaJam Preview, built from source. C++ Third Person template as the starting project.</li>
+      <li><strong>Images:</strong> OpenAI GPT image generation for reference art, town plates and resident sheets.</li>
+      <li><strong>3D:</strong> Tripo Studio for the hero, three bosses and four weapons, with auto-rigging.</li>
+      <li><strong>Animation:</strong> 54 clips from Adobe Mixamo, retargeted in engine. Sourced, not authored.</li>
+      <li><strong>Music:</strong> Suno, instrumental only.</li>
+      <li><strong>Voices:</strong> NVIDIA Magpie TTS for the three bosses.</li>
+      <li><strong>Sound effects:</strong> Kenney CC0 packs and a free sound pack from my asset library.</li>
+      <li><strong>Visual effects:</strong> Niagara packs from my asset library (a magic effects pack, a lightning pack and a basic effects pack), filtered heavily.</li>
+      <li><strong>Video:</strong> Higgsfield image-to-video for the opening and three boss intros; ffmpeg for assembly.</li>
+      <li><strong>Fonts:</strong> Cormorant Infant and Barlow Condensed under the Open Font License, in the game and on this page.</li>
+    </ul>
+    <p>The story draws on <em>Journey to the West</em>, a sixteenth-century novel in the public domain. The characters come from the novel; their designs, the towns and every line of dialogue were made for this game.</p>
+  </div>
+</section>
+
+</main>
+</div>
+
+<footer>
+  Wukong: King, Thief, Guardian · a solo entry in the 2026 Epic AI MegaJam by Ryan Ham, team Banana-Makes-Sense.<br>
+  All times Korea Standard Time. Figures are captures from the project, cropped or regrouped to one size and compressed. Nothing in them is retouched.
+</footer>
+
+<script src="assets/site.js"></script>
+</body>
+</html>
