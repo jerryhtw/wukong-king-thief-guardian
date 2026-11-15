@@ -8,13 +8,13 @@
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://jerryhtw.github.io/wukong-king-thief-guardian/">
 <meta property="og:title" content="Wukong: King, Thief, Guardian · The making of">
-<meta property="og:description" content="One director, a crew of Claude agents, thirty-three hours. What worked, what broke, and who did what.">
+<meta property="og:description" content="One director, a crew of Claude agents, thirty-five hours. What worked, what broke, and who did what.">
 <meta property="og:image" content="https://jerryhtw.github.io/wukong-king-thief-guardian/images/og-card.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Wukong: King, Thief, Guardian · The making of">
-<meta name="twitter:description" content="One director, a crew of Claude agents, thirty-three hours. What worked, what broke, and who did what.">
+<meta name="twitter:description" content="One director, a crew of Claude agents, thirty-five hours. What worked, what broke, and who did what.">
 <meta name="twitter:image" content="https://jerryhtw.github.io/wukong-king-thief-guardian/images/og-card.jpg">
 <link rel="canonical" href="https://jerryhtw.github.io/wukong-king-thief-guardian/">
 <meta name="color-scheme" content="light dark">
@@ -75,30 +75,28 @@
   </div>
 
   <div class="stats">
-    <div><b>33 h</b><span>from reading the jam page to this write-up</span></div>
+    <div><b>35 h</b><span>from the first session to the final build</span></div>
     <div><b>97 min</b><span>from greenlight to a playable first chapter</span></div>
-    <div><b>200+</b><span>commits across the game and docs repositories</span></div>
+    <div><b>266</b><span>commits across the game and docs repositories</span></div>
     <div><b>39 → 60</b><span>frames per second on the test phone</span></div>
   </div>
 
-  <p class="note">Written at 00:40 on Monday 16 November, ten hours before the official deadline, while the second round of phone notes was still being built. The section on <a href="#qa">QA and packaging</a> says exactly what had and had not been verified at that moment.</p>
+  <p class="note">I confirmed the final build at 02:57 on Monday 16 November, about eight hours before the official deadline. It ships as an Android APK, with a Windows build made from the same commit. <a href="#qa">QA and packaging</a> lists what was checked on it and the two issues I know it still has.</p>
 
-  <!-- GAMEPLAY-VIDEO-SLOT: uncomment this block once video/wukong_gameplay_60s_web.mp4 exists.
   <figure class="watch">
-    <video controls playsinline preload="none" poster="images/hero.jpg" width="1280" height="720">
+    <video controls playsinline preload="metadata" poster="images/hero.jpg" width="1920" height="1080" aria-label="Gameplay video, sixty seconds, with sound">
       <source src="video/wukong_gameplay_60s_web.mp4" type="video/mp4">
     </video>
-    <figcaption>Watch the gameplay video: sixty seconds recorded from the final build.</figcaption>
+    <figcaption>Watch the gameplay video: sixty seconds from the final build, with sound. The opening, the three boss fights, a town and the Morning Drill.</figcaption>
   </figure>
-  END GAMEPLAY-VIDEO-SLOT -->
 </section>
 
 <!-- ============================================================ -->
 <section id="play">
   <div class="col">
     <h2>What you play</h2>
-    <p class="when">Reference · the build as of Monday 01:55</p>
-    <p class="lede">This part is a manual, not a story. It lists what Wukong can do and what each boss does to him, so the making-of sections that follow can talk about changes without stopping to explain the moves. The game was still being tuned when I wrote it, so I have kept exact numbers to the few that matter.</p>
+    <p class="when">Reference · the final build (Android r11, Windows play8)</p>
+    <p class="lede">This part is a manual, not a story. It lists what Wukong can do and what each boss does to him, so the making-of sections that follow can talk about changes without stopping to explain the moves. It describes the final build, and I have kept exact numbers to the few that matter.</p>
 
     <h3>Wukong's kit</h3>
     <p>There is no block and no healing. You read the warning on the ground, get out of it, and hit back while the boss recovers.</p>
@@ -125,7 +123,7 @@
     <article class="skill">
       <h4>Ultimate: Pillar of Heaven</h4>
       <dl><dt>Phone</dt><dd>ULTIMATE, which lights up gold when ready</dd><dt>PC</dt><dd>R</dd></dl>
-      <p>Ten landed light hits fill the gauge. Time stops, the staff grows into a pillar that towers over the arena, tips, and falls on the boss. Wukong cannot be hurt while it plays, and the boss is left staggered. The blow is worth about five light hits.</p>
+      <p>Ten landed light hits fill the gauge. Time stops and the red-lacquer staff grows, at full thickness, into a pillar that towers over the arena. Wukong never lets go of it: with one hand on its base he swings it down across the boss, and it shrinks back into his grip. He cannot be hurt while it plays, and the boss is left staggered. The blow is worth about five light hits.</p>
       <p class="why">It replaced the healing peach in the last hours: a reward for staying on the attack instead of a reward for backing off.</p>
     </article>
     <article class="skill">
@@ -165,12 +163,10 @@
   <div class="col">
     <p><strong>Phase 2, "The Liar", at half health.</strong> He roars, which is a free second of hits, then moves faster and adds the feint chain and the kick.</p>
   </div>
-  <!-- CLIP-SLOT boss1: uncomment once video/clip-boss1.mp4 and images/clip-boss1-poster.jpg exist.
   <figure>
-    <video class="loop" muted loop playsinline preload="none" poster="images/clip-boss1-poster.jpg" width="1280" height="720" aria-label="Chapter I highlight: the Demon King of Confusion"><source src="video/clip-boss1.mp4" type="video/mp4"></video>
-    <figcaption>Chapter I highlight: the Demon King of Confusion.</figcaption>
+    <video class="loop" muted loop playsinline preload="none" poster="images/clip-boss1-poster.jpg" width="1280" height="720" aria-label="Gameplay clip: Wukong fights the Demon King of Confusion on the waterfall ledge"><source src="video/clip-boss1.mp4" type="video/mp4"></video>
+    <figcaption>Chapter I, the Demon King of Confusion. Every clip in this section was captured from the final build with the phone's touch layout on screen, and the hands on the controls are the game's own autopilot, not mine.</figcaption>
   </figure>
-  END CLIP-SLOT boss1 -->
 
   <div class="col">
     <h3 class="boss">II · Marshal of the Hall</h3>
@@ -192,12 +188,10 @@
   <div class="col">
     <p><strong>Phase 2, "Decree", at 55 percent,</strong> opens with Call the Guard and adds the lash and the seals. <strong>Phase 3, "Sealed Gate", at 20 percent,</strong> keeps the same beat on a faster metronome: the hammer throws two rings and the lash fans into three.</p>
   </div>
-  <!-- CLIP-SLOT boss2: uncomment once video/clip-boss2.mp4 and images/clip-boss2-poster.jpg exist.
   <figure>
-    <video class="loop" muted loop playsinline preload="none" poster="images/clip-boss2-poster.jpg" width="1280" height="720" aria-label="Chapter II highlight: the Marshal of the Hall"><source src="video/clip-boss2.mp4" type="video/mp4"></video>
-    <figcaption>Chapter II highlight: the Marshal of the Hall.</figcaption>
+    <video class="loop" muted loop playsinline preload="none" poster="images/clip-boss2-poster.jpg" width="1280" height="720" aria-label="Gameplay clip: Wukong fights the Marshal of the Hall on the palace terrace"><source src="video/clip-boss2.mp4" type="video/mp4"></video>
+    <figcaption>Chapter II, the Marshal of the Hall. I asked for this one to be shot again in the middle of the terrace, where his gold warnings have room to read.</figcaption>
   </figure>
-  END CLIP-SLOT boss2 -->
 
   <div class="col">
     <h3 class="boss">III · King of the Frozen River</h3>
@@ -220,34 +214,28 @@
   <div class="col">
     <p><strong>Phase 2, "Thin Ice", at 40 percent.</strong> He glides faster, attacks more often and adds Undertow. Lanterns lit in the village thin the fog during the fight.</p>
   </div>
-  <!-- CLIP-SLOT boss3: uncomment once video/clip-boss3.mp4 and images/clip-boss3-poster.jpg exist.
   <figure>
-    <video class="loop" muted loop playsinline preload="none" poster="images/clip-boss3-poster.jpg" width="1280" height="720" aria-label="Chapter III highlight: the King of the Frozen River"><source src="video/clip-boss3.mp4" type="video/mp4"></video>
-    <figcaption>Chapter III highlight: the King of the Frozen River.</figcaption>
+    <video class="loop" muted loop playsinline preload="none" poster="images/clip-boss3-poster.jpg" width="1280" height="720" aria-label="Gameplay clip: Wukong fights the King of the Frozen River and finishes him with the ultimate"><source src="video/clip-boss3.mp4" type="video/mp4"></video>
+    <figcaption>Chapter III, the King of the Frozen River, with his frost warnings on the ice. The clip ends on a kill by Pillar of Heaven.</figcaption>
   </figure>
-  END CLIP-SLOT boss3 -->
 
   <div class="col">
     <h3>One chapter, start to finish</h3>
-    <p><strong>The Morning Drill.</strong> The game opens on the waterfall ledge with a wooden training dummy. The drill teaches one thing per step, in the order the first boss will ask for them: move and look, the three-hit combo, dodging off a red mark, the perfect dodge and its counter, the big attack, clones, and finally a dodge through the water curtain. It can be skipped.</p>
+    <p><strong>The Morning Drill.</strong> The game opens on the waterfall ledge with a wooden training dummy. The drill teaches one thing per step, in the order the first boss will ask for them: move and look, the three-hit combo, dodging off a red mark, the perfect dodge and its counter, the big attack, clones, and finally a dodge through the water curtain, with gold arrows on the ground pointing the way. On a phone the big attack is the ultimate itself, played in full on the dummy; on PC it is the Focus Smash, and the PC drill adds a heavy-attack step. The drill can be skipped.</p>
   </div>
-  <!-- CLIP-SLOT drill: uncomment once video/clip-drill.mp4 and images/clip-drill-poster.jpg exist.
   <figure>
-    <video class="loop" muted loop playsinline preload="none" poster="images/clip-drill-poster.jpg" width="1280" height="720" aria-label="The Morning Drill, from the first step to the water curtain"><source src="video/clip-drill.mp4" type="video/mp4"></video>
-    <figcaption>The Morning Drill, from the first step to the water curtain.</figcaption>
+    <video class="loop" muted loop playsinline preload="none" poster="images/clip-drill-poster.jpg" width="1280" height="720" aria-label="Gameplay clip: the Morning Drill, dodging on a training dummy"><source src="video/clip-drill.mp4" type="video/mp4"></video>
+    <figcaption>The Morning Drill at its dodge lesson: get off the red mark, and later, move as it flashes.</figcaption>
   </figure>
-  END CLIP-SLOT drill -->
 
   <div class="col">
-    <p><strong>The town.</strong> Each chapter then starts in a painted town seen from above. You walk Wukong among residents who are busy with their own day, and a gold mark shows who to talk to next. There are two conversations per town. Each gives a line of story, a hint about the boss or a boon for the fight (clone charges, longer warnings, more health, lanterns), and the task list ticks as you go. When both are done, a gold ring opens at the edge of town.</p>
+    <p><strong>The town.</strong> Each chapter then starts in a painted town seen from above, live from its first frame. You walk Wukong among residents who are busy with their own day, with the stick or by tapping where you want to go: the tap ripples and a gold ring marks the destination. A large gold exclamation mark shows who to talk to next. There are two conversations per town. Each gives a line of story, a hint about the boss or a boon for the fight (clone charges, longer warnings, more health, lanterns), and the task list ticks as you go. When both are done, a gold ring opens at the edge of town, under a beam of light and a pointer that are hard to miss.</p>
     <p><strong>The crossing.</strong> Step into the ring and cross. The camera dives through mist to Wukong's shoulder, the boss gets his reveal and name card, and the fight begins in 3D.</p>
   </div>
-  <!-- CLIP-SLOT town: uncomment once video/clip-town.mp4 and images/clip-town-poster.jpg exist.
   <figure>
-    <video class="loop" muted loop playsinline preload="none" poster="images/clip-town-poster.jpg" width="1280" height="720" aria-label="A town quest run: talk, the task list updates, and the ring crossing"><source src="video/clip-town.mp4" type="video/mp4"></video>
-    <figcaption>A town quest run: talk, the task list updates, and the ring crossing.</figcaption>
+    <video class="loop" muted loop playsinline preload="none" poster="images/clip-town-poster.jpg" width="1280" height="720" aria-label="Gameplay clip: a walk through the Chapter I town, two conversations and the crossing"><source src="video/clip-town.mp4" type="video/mp4"></video>
+    <figcaption>Chapter I's town in fourteen seconds: two conversations, the task list ticking with the boons earned, and the crossing at the waterfall.</figcaption>
   </figure>
-  END CLIP-SLOT town -->
 </section>
 
 <!-- ============================================================ -->
@@ -671,18 +659,38 @@
   </div>
   <figure>
     <img src="images/21-phone-round6.jpg" alt="Four phone screenshots in a grid: title, tutorial, town and first boss fight" loading="lazy" width="1600" height="746">
-    <figcaption>Round six at 00:06: title, tutorial, town and fight, captured from the phone. This is the newest verified state of the game on a device as I write.</figcaption>
+    <figcaption>Round six at 00:06: title, tutorial, town and fight, captured from the phone. Five more phone builds followed before the final one.</figcaption>
   </figure>
 
   <div class="col">
     <h3>Still not right, so back to concepts</h3>
     <p>Even at round six the touch UI felt like a PC interface that had been made to fit. My own rule is that design options arrive as pictures, not descriptions, so at 00:09 the crew delivered a page of sixteen mobile-first mockups in phone frames drawn over real device screenshots: four options each for fight controls, town, tutorial and menus. I picked one for each of the first three and rejected all four menu designs, backgrounds included. Four new ones were on the page at 00:31.</p>
-    <p>The same playtest produced gameplay cuts. The Demon King's health was halved because he was far too hard for a first boss. His shield attack looked odd and was removed. Town dialogue went from 54 lines to 18. The peach heal was replaced by a dodge with three stamina charges, where a perfect dodge refunds its charge. Those commits are timestamped between 00:21 and 00:36 on Monday and are the last ones in the history as I write.</p>
+    <p>The same playtest produced gameplay cuts. The Demon King's health was halved because he was far too hard for a first boss. His shield attack looked odd and was removed. Town dialogue went from 54 lines to 18. The peach heal was replaced by a dodge with three stamina charges, where a perfect dodge refunds its charge. The SMASH button became an ultimate, and its cinematic, Pillar of Heaven, landed at 01:30.</p>
   </div>
   <figure>
     <img src="images/23-mobile-ui-concepts.jpg" alt="Four phone mockups: fight controls arranged in an arc, a town with a single talk button, a tutorial with a step rail, and a pause menu with gold plaques" loading="lazy" width="1600" height="900">
-    <figcaption>From the mobile UI concepts page. Three of these directions are the ones I chose for fight, town and tutorial; the fourth is one of the new menu candidates. They are designs under construction, not screenshots of the shipped game.</figcaption>
+    <figcaption>From the mobile UI concepts page. Three of these directions are the ones I chose for fight, town and tutorial; the fourth is one of the new menu candidates. The three I chose went into the game at 00:52.</figcaption>
   </figure>
+  <div class="col">
+    <h3>Rounds three and four</h3>
+    <p>I played each new APK as it arrived and sent notes while the next one built. A build took about three minutes by then, so the loop was short.</p>
+    <p><strong>Round three, 01:41, on build r7.</strong> I had reached the middle of the second boss.</p>
+    <ul class="tight">
+      <li>Light attacks felt slow. They are now twice as fast.</li>
+      <li>Mashing attack shook the camera without pause. Light hits no longer shake it.</li>
+      <li>The drill said to dodge through the water curtain and I could not tell where that was. It got a marker.</li>
+      <li>In town I wanted to see where a tap would send me, a bigger exclamation mark, and an obvious door to the boss. All three went in.</li>
+      <li>The Marshal held his sword at a slant and hit too hard. The grip was straightened, and he dropped to 60 percent of his health and 70 percent of his speed.</li>
+    </ul>
+    <p><strong>Round four, on builds r9 and r10.</strong></p>
+    <ul class="tight">
+      <li>The curtain marker had grown a glowing bar, a ring and a label. I asked for the arrows only.</li>
+      <li>Each town opened by darkening the screen to announce the chapter. I had it removed, so the town is playable at once.</li>
+      <li>In the opening, the River King's flash showed him still walking in. It now uses the close-up where he has arrived, breathing frost.</li>
+      <li>The ultimate's pillar left Wukong's hands on the way down and read as a throw. At 02:39 I asked that one hand stay on it. That was the last change, committed at 02:43.</li>
+    </ul>
+    <p>Build r11 was on my phone at 02:47. I called it final at 02:57.</p>
+  </div>
 </section>
 
 <!-- ============================================================ -->
@@ -715,18 +723,27 @@
 <section id="qa">
   <div class="col">
     <span class="sec-no">13</span>
-    <h2>QA and packaging: where it stands</h2>
-    <p class="when">As of Monday 00:40</p>
+    <h2>QA and packaging</h2>
+    <p class="when">Final build · Monday 02:57</p>
     <p class="lede">Testing on this project had three layers, and each caught things the others could not.</p>
     <p><strong>The game plays itself.</strong> A command-line switch runs any chapter unattended, with a strong setting that lets the bot win. It checks that the flow never dead-ends and that the logs stay clean of errors and asserts. It was run before every build that reached me.</p>
     <p><strong>Agents read their own screenshots.</strong> Each run saves a frame at every attack, warning and card. Purpose-built variants followed: weapon-grip close-ups, an effects gallery, phone-resolution layout audits on the PC, and a mode that opens each menu so text can be checked for overflow. Grey weapons, black floors and the camera inside a rock were all caught this way, with green logs.</p>
     <p><strong>I play it.</strong> Nothing above found that the town was dull, that three bosses fought alike, or that a phone tutorial could not be finished. Those took a person.</p>
 
     <h3>Packaging</h3>
-    <p>The Android build is not made by hand. A cycle script fast-forwards the Android copy of the repository, compiles, cooks, packages, and then inspects the APK: package name, 64-bit ARM, the data inside the file, a size between 300 MB and 1 GB, and the baked command line. Only if all of that passes does it replace the last good APK and its install notes. A three-line engine patch stops development builds opening a profiling port at start-up, which on Windows would have greeted judges with a firewall prompt.</p>
+    <p>The Android build is not made by hand. A cycle script checks out an exact commit in the Android copy of the repository, compiles, cooks, packages, and then inspects the APK: package name, 64-bit ARM, the data inside the file, a size between 300 MB and 1 GB, and the baked command line. Only if all of that passes does it replace the last good APK and its install notes. A three-line engine patch stops development builds opening a profiling port at start-up, which on Windows would have greeted judges with a firewall prompt.</p>
 
-    <h3>What is verified, and what is not</h3>
-    <p>At the time of writing, the round-six APK has been installed and walked through title, tutorial, town and first fight on the test phone, and measured at 60 fps in that fight. A Windows build was packaged at 00:24 with the cutscenes playing. The changes from the second phone playtest, and the new touch UI from the concepts page, are in progress and have not yet been through a full device round. Chapters II and III have had less time on the phone than Chapter I. If something in the submitted build differs from this page, that hour is where it changed.</p>
+    <h3>The final build</h3>
+    <p>Both submitted builds come from one commit, made at 02:43. The Android APK is the eleventh phone build, r11. It passed the script's checks, was installed on my phone at 02:47, and is the build I confirmed as final. The Windows build, play8, was packaged from the same commit and passed an unattended smoke run through the drill and into all three chapters' fights with no fatal errors, failed checks or errors in the log. Each build went into its own zip for the submission: 462 MB for Android, with a 481.6 MB APK inside, and 839 MB for Windows.</p>
+
+    <h3>Checking the camera, not just the game</h3>
+    <p>The gameplay video was captured from the final Windows build by a crew agent, and capture needed its own QA. Every take is recorded from the game window only, with the game's own audio and nothing else from the PC, and each take is scanned automatically for black frames before it can be used.</p>
+    <p>That scan exists because of a false alarm. I saw the screen blinking in a recording of the town and reported it as a bug. It was not in the game. The first screen grabber was catching empty buffers from the window, and a different capture method recorded about 1,650 frames of the same town without one black frame.</p>
+    <p>The second finding was quieter. Every game an agent launched for testing had been silent, because Unreal mutes a window that does not have focus. No agent had judged sound by ear, only by events in the log, so nothing had been missed, but the video would have had no game sound.</p>
+
+    <h3>Known issues</h3>
+    <p>The scan did find one real fault. At the cut from a boss's intro movie to the fight, a single black frame sometimes appears, more likely when the movie is skipped. It was found 25 minutes before my cut-off for the build, and the crew's orchestrator left the transition alone rather than change it that late.</p>
+    <p>Focus has no use on a phone. The gauge still fills, but the moves that spend it were cut from the touch layout and the ultimate has its own gauge. Chapters II and III also had less of my time on the phone than Chapter I.</p>
   </div>
 </section>
 
@@ -745,6 +762,7 @@
     <li><b>A flag that skips a safety check moves the cost to someone else.</b>Skipping the build lock saved seconds and cost five agents most of an hour.</li>
     <li><b>Small commits are an agent's memory.</b>When the lead ran out of context, its successor resumed from the log without a handover.</li>
     <li><b>Start packaging on day one, and test on the target device as early as you can.</b>The first package took over two hours. The first phone test took one minute to fail. I should have had a phone in my hand before 22:55.</li>
+    <li><b>Check the camera before blaming the scene.</b>The blinking town was a capture fault, and the silent test runs were a window without focus. Both looked like game bugs until someone checked the tool.</li>
   </ol>
 </section>
 
@@ -789,6 +807,14 @@
         <tr><td class="t">23:39</td><td class="wrap">Final title: Wukong: King, Thief, Guardian</td></tr>
         <tr><td class="t">Mon 00:06</td><td class="wrap">Phone round six verified</td></tr>
         <tr><td class="t">00:09</td><td class="wrap">Mobile UI concepts page; second phone playtest cuts through 00:36</td></tr>
+        <tr><td class="t">00:52</td><td class="wrap">The touch UI I picked from the concepts goes live</td></tr>
+        <tr><td class="t">01:30</td><td class="wrap">Pillar of Heaven, the ultimate; phone builds r7 at 01:26 and r8 at 01:37</td></tr>
+        <tr><td class="t">01:41</td><td class="wrap">Third phone round: faster light attacks, a weaker Marshal, town markers (commits 01:46 to 01:59)</td></tr>
+        <tr><td class="t">02:03</td><td class="wrap">Build r9 on the phone; Windows build play7 at 02:08</td></tr>
+        <tr><td class="t">02:21</td><td class="wrap">Fourth round: opening flash, curtain arrows only, towns start live (to 02:24)</td></tr>
+        <tr><td class="t">02:37</td><td class="wrap">Pillar of Heaven reworked at full size; build r10 at 02:41</td></tr>
+        <tr><td class="t">02:43</td><td class="wrap">Last commit: the pillar stays in Wukong's hand. Build r11 on the phone at 02:47, Windows play8 at 02:53</td></tr>
+        <tr><td class="t">02:57</td><td class="wrap">I confirm the final build</td></tr>
         <tr><td class="t">Mon 10:59</td><td class="wrap">Official deadline</td></tr>
       </tbody>
     </table>
@@ -823,6 +849,8 @@
         <tr><td>Playtesting</td><td><span class="who h">Human</span></td><td class="wrap">Every round on PC and phone</td></tr>
         <tr><td>Automated testing, screenshot review</td><td><span class="who a">Opus 5.5</span></td><td class="wrap">Self-play runs, contact sheets, device captures and frame timing over adb</td></tr>
         <tr><td>Packaging, Android port</td><td><span class="who a">Sonnet · Opus</span></td><td class="wrap">Windows pipeline, then the Android build, touch controls and cycle scripts</td></tr>
+        <tr><td>Gameplay video</td><td><span class="who a">Crew</span> <span class="who h">Human</span></td><td class="wrap">Captured by a crew agent from the final build with window capture and game-only audio, and cut to the structure I set. Revised once at my request: a calmer first boss, the second boss re-shot in the open, and the drill's dodge step in place of the ultimate. The music is one of my Suno tracks. Its download carried a crackle I could hear in places, so after a second revision the intro sits behind a dark low-pass that opens at the first fight, the music under the gameplay is high-cut while the game's own hits stay bright, and a crackling ambience on the drill ledge is gated out</td></tr>
+        <tr><td>Cover image</td><td><span class="who a">Crew</span> <span class="who h">Human</span></td><td class="wrap">Composited by the crew from cutscene frames; I picked it over two rounds of options</td></tr>
         <tr><td>Launcher icon art, final approvals, submission</td><td><span class="who h">Human</span></td><td class="wrap">Including the one permission request that needed a person</td></tr>
         <tr><td>Animation clips, sound effects, effect packs, fonts, project template</td><td><span class="who s">Sourced</span></td><td class="wrap">Listed in the next section</td></tr>
         <tr><td>This development log</td><td><span class="who a">Crew</span></td><td class="wrap">Written by a crew agent from the running making-of log and both commit histories, and published only after my review</td></tr>
