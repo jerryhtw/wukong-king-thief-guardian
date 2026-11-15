@@ -148,3 +148,10 @@ footer{border-top:1px solid var(--rule);margin-top:80px;padding:30px 24px 60px;f
 }
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 @media print{.toc,.theme{display:none}.shell{display:block}}
+
+/* side-by-side before/after pairs (compositions too different for a slider) */
+.pair .cell{position:relative;min-width:0}
+.pair img{aspect-ratio:auto;object-fit:contain;width:100%;height:auto;border:1px solid var(--rule)}
+.pair .tag{position:absolute;top:8px;font-family:var(--label);font-weight:700;letter-spacing:.14em;font-size:11.5px;text-transform:uppercase;color:#f3ead8;background:rgba(15,12,9,.72);padding:3px 8px}
+.pair .tag.l{left:8px}
+.pair .tag.r{left:8px;background:rgba(173,54,34,.88)}
