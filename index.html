@@ -102,12 +102,7 @@
     <p>Why Wukong? Black Myth: Wukong inspired me deeply, and it was a big part of the motivation behind this plan. Inspiration is where it stopped. The novel is in the public domain and that game is not, so from the first hour the rule was to learn from its genre and never borrow from it (see <a href="#pivot">section 03</a>).</p>
     <p>The bet was that I could spend those days directing instead of typing. I would hold the decisions that need taste, money, an account or a submit button. Everything else would go to Claude models running as agents inside a single Claude Code session, each used where it is strongest. Fable 5.2 took concepts, story and art direction. Opus 5.5 took planning, the core game code, debugging and the job of orchestrating the others. Sonnet 5.5 took high-volume building: arenas, effects wiring, document revisions.</p>
     <p>One rule from my brief shaped the whole project: do not run every stage on the same model at the same effort. It wastes time and tokens. A one-off plan synthesis got Opus at maximum effort. A master-plan revision got Sonnet at default.</p>
-    <p>The first task was unglamorous. Opus translated the whole jam page into Korean, section by section, keeping all 64 links and adding a Korean time beside every US one. That is how we noticed the real deadline is Monday 10:59, not Sunday midnight. I set my own deadline at Sunday 22:00 and treated the rest as buffer. I ended up needing the buffer.</p>
   </div>
-  <figure>
-    <img src="images/01-jam-page.jpg" alt="The itch.io page of the 2026 Epic AI MegaJam" loading="lazy" width="1600" height="900">
-    <figcaption>The jam page as captured on 15 November. Reading it line by line, with converted times, moved the deadline by eleven hours in my head.</figcaption>
-  </figure>
 </section>
 
 <!-- ============================================================ -->
@@ -119,11 +114,8 @@
     <p class="lede">My first brief asked for too much at once: a high score on all seven judging criteria, clever use of sponsor products, an Android client talking to a dedicated server on AWS, a 2D part mixed with a 3D part, an East-Asian myth, and a mechanic nobody had seen.</p>
     <p>Before any design, Sonnet research agents checked each assumption against primary sources: the 19-page official rules, the jam page, engine and plugin release notes. They wrote one shared fact file so later agents would not research the same things twice. The most useful part was a table titled "your assumption vs reality". AWS is not a judging sponsor. Several NVIDIA and AWS plugins I had counted on have no UE 5.9 build. All text and voice must be English. Sponsor usage does not change the score, and ties are broken by re-scoring Fun at double weight.</p>
     <p>That last line mattered more than anything else in the file.</p>
-    <p>At 00:06 Opus turned the facts into a "war room" page: a strategy per judging criterion, a model and effort matrix per stage, a live countdown, and a Gantt chart with one lane per model. It named my checkpoints after film production, from G0 Greenlight to G6 Final Cut, and budgeted about three hours of my time across all of them. Six minutes later Fable delivered three concepts built around the jam theme, each with an interactive mockup.</p>
-  </div>
-  <div class="col">
-    <p>The plan assumed an eight-hour unattended night shift for the agents. That shift never ran. I did not greenlight a concept, so there was nothing to build.</p>
-    <p>Three well-argued pitches had left me cold, and the reason was that they were written to fit a theme. At 01:05 I wrote new directions into the brief and handed them over at 09:57 on Sunday morning.</p>
+    <p>At 00:06 Opus wrote a master plan with a model and effort matrix for each stage and seven checkpoints for me, named after film production, from G0 Greenlight to G6 Final Cut. Six minutes later Fable delivered three concepts built around the jam theme.</p>
+    <p>The three pitches were well argued and they left me cold, so I greenlit none of them, and the eight-hour night shift planned for the agents never ran. The reason was that they were written to fit a theme. At 01:05 I wrote new directions into the brief and handed them over at 09:57 on Sunday morning.</p>
   </div>
 </section>
 
@@ -136,7 +128,6 @@
     <p class="lede">The new brief was shorter and blunter. Set the theme aside and make the most fun game possible, since Fun is the tie-breaker and a forced theme was hurting the ideas. The subject is Sun Wukong, a myth everyone knows, so a five-to-ten-minute game can start fast. AWS is out. The deadline is 22:00 tonight. And before any concept art is paid for, show me ten cheap concepts.</p>
     <p>I also asked for a AAA-style third-person action feel for the 3D half. The crew drew a line before doing anything else: study the grammar of the genre (lighting, camera, dodge-first combat, boss pacing) but never the characters, bosses, levels or UI of Black Myth: Wukong or any other game, and never feed anyone's media to a generator. The jam forbids third-party IP, and copying would have put the entry at risk. One of the ten concepts was later cut because its setting sat too close to an existing title.</p>
     <p>While Fable wrote concepts, Opus checked my keys with free calls and found a money problem. The 3,200 Tripo credits from the jam perk live in Tripo Studio, the web app. The API wallet read zero, and the two are separate purchases. Opus estimated $10 to $20 to top up. I declined and decided to do the generation by hand in Studio from prompts the crew would write. That made me part of the critical path, which I accepted.</p>
-    <p>One mistake from this hour belongs on the record. I had pasted an API key into a notes file that git was tracking. Opus moved it out before the first commit touched it and made the repository ignore secret files. Nothing leaked, but it was closer than I would like.</p>
   </div>
 
 
@@ -168,9 +159,6 @@
         <tr><td class="t">11:05</td><td class="wrap">A hidden-demon deduction village</td><td class="wrap">I wanted a town that lives, not a puzzle wearing one</td></tr>
         <tr><td class="t">11:30</td><td class="wrap">A stone-skinned hero; comic-style 2D art; residents driven by a live model</td><td class="wrap">He has to read as Wukong; two art styles felt like two games; pre-written lines are safer and cheaper</td></tr>
         <tr><td class="t">13:47</td><td class="wrap">Towns as a resource game (command, steal, help)</td><td class="wrap">I played it. It was not fun</td></tr>
-        <tr><td class="t">18:31</td><td class="wrap">A marketplace explosion effect</td><td class="wrap">It rendered as a screen full of orange balls</td></tr>
-        <tr><td class="t">23:22</td><td class="wrap">Chevron arrows on charge warnings; round boulders on the fight floor</td><td class="wrap">Both looked wrong on the phone</td></tr>
-        <tr><td class="t">23:38</td><td class="wrap">An interim title that lasted four minutes</td><td class="wrap">It echoed another game's name</td></tr>
         <tr><td class="t">Mon 00:21</td><td class="wrap">The first boss's shield attack; the peach heal; half of the town dialogue; all four menu designs</td><td class="wrap">Second phone playtest: too hard, too odd, too much talking</td></tr>
       </tbody>
     </table>
@@ -289,10 +277,8 @@
     <figcaption>Drag to compare. Chapter II at 15:30, and the boss reveal on the same terrace at 18:21 after the arena pass and the intro camera work.</figcaption>
   </figure>
   <div class="col">
-    <h3>A wrong diagnosis, corrected</h3>
-    <p>A browser agent tried to fetch the Mixamo clips and a free sound pack through my Chrome. The sites reported success and no file appeared. The crew checked the profile settings, ruled out a hidden save dialog, and concluded, in writing, that downloads started from a controlled tab never reach disk. The task came back to me.</p>
-    <p>Within the hour I found the files. My Chrome saves to a different drive, and the crew had only looked in the default folder. Four copies of the same test file sat there, timestamped to the minute of each attempt. The devlog entry was corrected and the download run resumed. A confident "it cannot work" needs as much evidence as "it works".</p>
-    <p>The same hour had a better surprise. The launcher could not add marketplace packs to a source-built engine project, but its download cache already held packs I owned: 61 magic effects, a lightning set, a basic effects set and 50 sounds. With two CC0 sound packs from Kenney, that was enough for real sparks, slams and impacts without downloading anything new.</p>
+    <h3>Packs I already owned</h3>
+    <p>The launcher could not add marketplace packs to a source-built engine project, but its download cache already held packs I owned: 61 magic effects, a lightning set, a basic effects set and 50 sounds. With two CC0 sound packs from Kenney, that was enough for real sparks, slams and impacts without buying anything.</p>
   </div>
 </section>
 
@@ -334,7 +320,7 @@
     <span class="sec-no">08</span>
     <h2>Sound: Suno, Kenney, and three voices from NVIDIA</h2>
     <p class="when">Sunday 12:45 → 17:12</p>
-    <p class="lede">I made the music in Suno from prompts Fable wrote. The pack describes twelve instrumental cues built around one pentatonic motif. The main theme carries it; the opening, the three boss themes and the ending were to be made from that theme with Suno's Cover feature so the melody follows the player through the game. Keys stay in one family and tempos sit at 80, 120 and 160 beats per minute. No prompt names an artist or a work.</p>
+    <p class="lede">I made the music in Suno from prompts Fable wrote. The pack describes twelve instrumental cues built around one pentatonic motif. The main theme carries it; the opening, the three boss themes and the ending were to be made from that theme with Suno's Cover feature so the melody follows the player through the game. No prompt names an artist or a work.</p>
     <p>I delivered seven tracks in the first batch, in time for the 15:07 build, and the crew normalised them to a common loudness before import.</p>
     <p>Sound effects come from two CC0 packs by Kenney, 182 sounds converted to WAV, plus the 50-sound pack from my own library. Which sound and which effect play for which event is not in code. It lives in one data file that maps an event name to an asset, a scale and a colour, with per-boss overrides, so an integrator agent could tune the feel of every hit while the gameplay lead stayed on stability.</p>
     <p>The boss voices are synthetic and I want to be plain about that. A Sonnet agent called NVIDIA's Magpie TTS directly over gRPC to generate 43 English voice assets: seven spoken lines per boss, plus attack, hurt, roar, death and laugh sets. Each boss was then shaped differently: a cave growl for the Demon King, a voice inside a helmet for the Marshal, and an icy two-voice whisper for the River King. In the 18:33 regression run, thirteen voice lines fired per fight.</p>
@@ -347,7 +333,7 @@
     <span class="sec-no">09</span>
     <h2>Running the crew, and what broke</h2>
     <p class="when">All day, worst around 21:30</p>
-    <p class="lede">From early afternoon there were usually four or five agents working at once. An Opus orchestrator held the conversation with me, split my notes into briefs, and reviewed results. Under it sat a gameplay lead with its own sub-agents, an arena builder, an audio and effects integrator, and at times a writer or a researcher. This is how that was kept from collapsing, and the four times it nearly did.</p>
+    <p class="lede">From early afternoon there were usually four or five agents working at once. An Opus orchestrator held the conversation with me, split my notes into briefs, and reviewed results. Under it sat a gameplay lead with its own sub-agents, an arena builder, an audio and effects integrator, and at times a writer or a researcher. This is how that was kept from collapsing, and where it nearly did.</p>
 
     <h3>What held it together</h3>
     <p>Each note of mine went to exactly one agent, and no fix counted as done until the orchestrator had looked at screenshots of it in a real fight. Shared facts lived in files, not in anyone's memory. Design reached code only as data: Fable edited JSON in the docs repository, and a sync step copied it into the game, so a designer and an engineer never edited the same file.</p>
@@ -355,12 +341,8 @@
     <p>Only one Unreal editor can safely build at a time, so agents took turns with a lock. When the Android work began, that agent got its own copy of the repository so its long builds would not block everyone else.</p>
 
     <h3>One engine, five agents</h3>
-    <p>The worst hour of the project came from an attempt to save time. The orchestrator suggested a build flag that skips the engine's own mutual-exclusion check. Two editor builds then raced on shared engine files, and the engine's build ID changed underneath everyone.</p>
-    <p>From that moment every test game stopped on a dialog saying its modules were built with a different engine version. Nobody was there to click it. The hung games held engine libraries open, so every rebuild failed too. Games that agents had launched in the background kept the engine's live-coding feature running and blocked the next build. One agent waited 45 minutes for the lock while others took it back to back. An arena rebuild was blocked outright because the editor's modules no longer matched the engine.</p>
-    <p>The fixes were plain. One build at a time. The lock is released only after the game has exited, not when the build ends. Check the build IDs before launching anything. And an explicit order of turns, written down, so no agent starves.</p>
+    <p>The worst hour of the project came from an attempt to save time. Five agents shared one engine install, and the orchestrator suggested a build flag that skips the engine's check against two builds running at once. Two builds then raced on shared engine files and changed the engine's build ID. After that, every test game stopped on a version-mismatch dialog that nobody was there to click, and one agent waited 45 minutes for its turn to build. The fixes were plain: one build at a time, release the lock only after the game has exited, check the build IDs before launching anything, and a written order of turns.</p>
 
-    <h3>A message that arrived one step late</h3>
-    <p>Before the 18:33 build the orchestrator told the lead to hold the package until four visual fixes landed. A message between agents is read at the receiver's next step, and the lead had already started packaging. That build went out without the fixes. I kept it as a stable fallback and the next build collected them. The rule since then is to send the hold before the go.</p>
 
     <h3>A permission I had to grant</h3>
     <p>The session ran in an automatic mode in which a permission check reviews what agents try to do. When an agent went to fix a broken weapon material, the fix lay in a folder outside its brief, and the check stopped it. The orchestrator brought the question to me, I read what the agent wanted to change, and I approved it.</p>
@@ -411,8 +393,6 @@
   </figure>
 
   <div class="col">
-    <h3>"Show the boss's face"</h3>
-    <p>The reveal before each fight sometimes showed the boss's back. The intro cameras were fixed markers placed in each arena that knew nothing about which way he faced. Every shot is now chosen within 60 degrees of his facing, and he turns toward Wukong before the name card appears.</p>
 
     <h3>"It looks like paper stuck right behind it"</h3>
     <p>I was right, because it was. The backdrops were a ring of flat painted cards a few metres past the arena edge. Sonnet replaced them with one continuous panorama cylinder 170 metres across, with real cliffs, roofs and willows in the middle distance. You can see the difference in the first slider of this section.</p>
@@ -534,8 +514,7 @@
 
   <div class="col">
     <h3>Thirty-nine frames, then sixty</h3>
-    <p>The agent measured performance on the phone itself, a Galaxy Note20 Ultra, by launching self-played fights over adb. The Chapter I boss fight ran at 39.1 frames per second at native resolution. Rendering the 3D view at 80 percent brought it to 60.1 with a worst frame of 16.8 milliseconds. The foggy Chapter III was already at 59.6.</p>
-    <p>Two other ideas were tried and thrown out with numbers. Cheaper shadows gained nothing and added a two-second hitch. A 30 fps cap paced worse than no cap. With the later two-handed staff IK the fight holds 58 to 59. The setting is Android-only; the PC build is untouched.</p>
+    <p>The agent measured performance on the phone itself, a Galaxy Note20 Ultra, by launching self-played fights over adb. The Chapter I boss fight ran at 39.1 frames per second at native resolution. Rendering the 3D view at 80 percent brought it to 60.1 with a worst frame of 16.8 milliseconds. The foggy Chapter III was already at 59.6. With the later two-handed staff IK the fight holds 58 to 59. The setting is Android-only; the PC build is untouched.</p>
   </div>
   <figure>
     <div class="ba">
@@ -573,8 +552,8 @@
     <h2>Cutscenes from Higgsfield</h2>
     <p class="when">Sunday 20:30 → 22:58</p>
     <p class="lede">The cutscenes are mine, made with Higgsfield's image-to-video while the agents were fixing rocks. The crew's part was to make that as quick as possible for someone who had never used the tool under pressure.</p>
-    <p>Their first guide assumed a screen I did not have. I sent a screenshot of the one I did, and the guide was rewritten around it, down to an annotated picture of my own generator bar with eleven numbered controls. Start frames for the boss intros were composed in ChatGPT from the earlier references, so each video opens on a character that matches his in-game model.</p>
-    <p>The plan was seven clips. Credits ran short: three boss intros cost 160 each and one mistake cost another 160, which left about 360. Plan B dropped the per-town openings and spent what remained on one strong opening shot. When the first three intros came back sharing one camera move, a low push-in on a walking boss, the crew rewrote the second and third so each matches how its boss fights: a locked symmetrical march for the Marshal, a still figure far out in fog for the River King.</p>
+    <p>Start frames for the boss intros were composed in ChatGPT from the earlier references, so each video opens on a character that matches his in-game model.</p>
+    <p>The plan was seven clips. Credits ran short, so Plan B dropped the per-town openings and spent what remained on one strong opening shot. When the first three intros came back sharing one camera move, a low push-in on a walking boss, the crew rewrote the second and third so each matches how its boss fights: a locked symmetrical march for the Marshal, a still figure far out in fog for the River King.</p>
     <p>A small script assembles my raw clips into the four in-game movies with ffmpeg: 1080p, 30 frames per second, no audio because the game plays its own, and the title card burned into the opening. They were committed at 22:58. The title card was re-rendered twice in the next forty minutes as the game's name changed.</p>
   </div>
   <figure>
@@ -624,10 +603,7 @@
     <li><b>Do not trade the protagonist's identity for production convenience.</b>A stone monkey was easier to render. He was also not Wukong.</li>
     <li><b>Green logs are not a picture.</b>A self-played run with zero errors shipped grey weapons. Someone, human or agent, has to look.</li>
     <li><b>A flag that skips a safety check moves the cost to someone else.</b>Skipping the build lock saved seconds and cost five agents most of an hour.</li>
-    <li><b>Send the hold before the go.</b>Messages between agents land at the receiver's next step. "Wait for X" has to arrive first.</li>
-    <li><b>A confident negative needs evidence too.</b>"Downloads never reach disk" was written down as fact while the files sat on another drive.</li>
     <li><b>Small commits are an agent's memory.</b>When the lead ran out of context, its successor resumed from the log without a handover.</li>
-    <li><b>Relay requests in the asker's own words.</b>I asked for sprite sheets. The brief said "animation prompts", and I got video loops.</li>
     <li><b>Start packaging on day one, and test on the target device as early as you can.</b>The first package took over two hours. The first phone test took one minute to fail. I should have had a phone in my hand before 22:55.</li>
   </ol>
 </section>
@@ -643,7 +619,7 @@
     <table>
       <thead><tr><th>Time</th><th>What happened</th></tr></thead>
       <tbody>
-        <tr><td class="t">Sat 15:38</td><td class="wrap">Jam page read and translated; real deadline found to be Monday 10:59</td></tr>
+        <tr><td class="t">Sat 15:38</td><td class="wrap">Work begins; the real deadline is Monday 10:59</td></tr>
         <tr><td class="t">Sat 23:00</td><td class="wrap">Rules and sponsor research; shared fact file</td></tr>
         <tr><td class="t">Sun 00:06</td><td class="wrap">Master plan v1; three theme-first concepts at 00:12. None greenlit</td></tr>
         <tr><td class="t">01:05</td><td class="wrap">New directions written: set the theme aside, Sun Wukong, deadline 22:00</td></tr>
@@ -653,16 +629,15 @@
         <tr><td class="t">11:44</td><td class="wrap">Living-towns design and a 22-prompt art pack</td></tr>
         <tr><td class="t">12:03</td><td class="wrap">Greenlight. 24 reference images generated in five minutes</td></tr>
         <tr><td class="t">12:20</td><td class="wrap">Hero modelled and rigged in Tripo Studio</td></tr>
-        <tr><td class="t">12:41</td><td class="wrap">Game design committed as data: six tables, 263 lines</td></tr>
         <tr><td class="t">13:40</td><td class="wrap">Chapter I playable end to end; the game can play itself</td></tr>
         <tr><td class="t">13:47</td><td class="wrap">Dailies: "the town isn't fun". Towns become quest hubs</td></tr>
-        <tr><td class="t">15:24</td><td class="wrap">All three arenas in; builds at 15:40 and 15:50</td></tr>
+        <tr><td class="t">15:24</td><td class="wrap">All three arenas in</td></tr>
         <tr><td class="t">16:29</td><td class="wrap">Release candidate passes self-play. I ask for distinct bosses</td></tr>
         <tr><td class="t">17:11</td><td class="wrap">Boss voices from NVIDIA Magpie TTS; real weapon meshes</td></tr>
         <tr><td class="t">17:32</td><td class="wrap">Three distinct boss AIs in code, written by a successor lead</td></tr>
         <tr><td class="t">18:33</td><td class="wrap">Build passes regression; screenshots reveal four visual bugs</td></tr>
         <tr><td class="t">19:12</td><td class="wrap">Grey weapons fixed after my approval</td></tr>
-        <tr><td class="t">20:02</td><td class="wrap">Boss grips and intro facing fixed; panorama backdrops at 20:17</td></tr>
+        <tr><td class="t">20:02</td><td class="wrap">Boss grips fixed; panorama backdrops at 20:17</td></tr>
         <tr><td class="t">21:00</td><td class="wrap">Decision to enter on Android</td></tr>
         <tr><td class="t">~21:30</td><td class="wrap">Shared-engine incident: build ID changed, test games hang, a 45-minute lock wait</td></tr>
         <tr><td class="t">21:43</td><td class="wrap">Morning Drill tutorial; touch input</td></tr>
